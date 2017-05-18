@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ZH-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>用户注册</title>
+	<script type="text/javascript" src="//cdn.bootcss.com/socket.io/1.5.1/socket.io.min.js"></script>
+	<script id="jquery_172" type="text/javascript" class="library"
+	        src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+	<style>
+		.message_css {
+			color: red;
+		}
+	</style>
+</head>
+<body>
+<iframe name='hidden_frame' id="hidden_frame" style="display:none"></iframe>
+
+<div align="center">
+	<h2>围棋测试1.0注册界面</h2>
+	<form target="hidden_frame" action="#">
+		用户名:
+		<input type="text" id="user_id" name="user_id">
+		<br>
+		输入密码:
+		<input type="password" id="password1">
+		<br>
+		确认密码:
+		<input type="password" id="password2">
+		<br>
+		<input type="submit" value="注册" id="register_submit">
+	</form>
+</div>
+<br>
+<div align="center" class="message_css">
+	<div id="message">
+
+	</div>
+</div>
+</body>
+<script type="text/javascript" charset="utf-8">
+	$(document).ready(
+		function ()
+		{
+			var socket = io.connect();
+
+			$('form').submit(
+				function ()
+				{
+					$('#message').text('');
+
+					if ($('#user_id').val() == '')
+					{
+
+						$('#message').text('请输入用户名');
+						return;
+					}
+					if ($('#password1').val() != $('#password2').val())
+					{
+
+						$('#message').text('两次输入的密码不一致');
+						return;
+					}
+					if ($('#password1').val().length < 6)
+					{
+						$('#message').text('密码设置过短');
+						return;
+					}
+					socket.emit('register', {user_id: $('#user_id').val(), password: $('#password1').val()});
+				}
+			);
+
+
+			socket.on('register_reply', function (msg)
+			{
+				if (msg.data == 'success')
+				{
+					$('#message').text('用户注册成功');
+					window.location.href = "/login";
+				}
+				else if (msg.data == 'failed')
+				{
+					$('#message').text('此用户名已被使用,请换一个id注册');
+				}
+			});
+		}
+	)
+
+</script>
+</html>

@@ -1,0 +1,82 @@
+<!-- 
+@Time    : 2017/5/11 18:11
+@Author  : cyj
+@Site    : 
+@File    : login
+@Software: WebStorm
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>登录界面</title>
+	<script type="text/javascript" src="//cdn.bootcss.com/socket.io/1.5.1/socket.io.min.js"></script>
+    <link href="{{url_for("static",filename="css/loginstyle.css")}}" rel="stylesheet" type="text/css">
+	<script id="jquery_172" type="text/javascript" class="library"
+	        src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+</head>
+<body class="body1">
+<iframe name='hidden_frame' id="hidden_frame" style="display:none"></iframe>
+<div align="center" class="content">
+	<h2>围棋测试1.0登录界面</h2>
+	<form target="hidden_frame" action="#" class="form1">
+		用户名:
+		<input type="text" id="user_id">
+		<br>
+		&nbsp;密码:
+		<input type="password" id="password">
+		<br>
+		<input type="submit" id="login_submit" value="登录">
+	</form>
+	<div align="center">
+		<a href="/register" class="regbt">注册页面</a>
+	</div>
+	<div id="message">
+	</div>
+</div>
+
+<script type="text/javascript" charset="UTF-8">
+	$(document).ready(
+		function ()
+		{
+			var socket = io.connect();
+			var exp = new Date();
+			exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24);
+			var Expiration_time = "expires=" + exp.toUTCString();
+			document.cookie = "user=test;" + Expiration_time;
+
+
+			$('form').submit(
+				function ()
+				{
+					socket.emit('login', {user_id: $('#user_id').val(), password: $('#password').val()});
+				}
+			);
+
+
+			socket.on('login_reply', function (msg)
+			{
+				if (msg.data == 'success')
+				{
+					$('#message').text('登陆成功');
+					document.cookie = "user_id=" + $('#user_id').val() + ";" + Expiration_time;
+					document.cookie = "password=testpasword;" + Expiration_time;
+					document.cookie = "login=true;" + Expiration_time;
+					alert('登陆成功,正在跳转');
+					window.location.href = "/";
+				}
+				else
+				{
+					$('#message').text('登陆失败，请检查用户名或密码');
+				}
+			});
+
+		}
+	)
+
+</script>
+</body>
+
+
+</html>

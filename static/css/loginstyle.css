@@ -1,0 +1,88 @@
+@charset "UTF-8";
+.body1{
+	
+	background-position:top;
+	background-size: 150%，150%;
+
+	background-image: url(../img/Go.png);
+
+	color: white;
+	font-family: Consolas, "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", Monaco, "Courier New", "monospace";
+}
+
+.content{
+	width: 300px;
+	position: fixed;
+	top: 30%;
+	left: 50%;
+	margin-left: -150px;
+}
+.form1{
+	background-color: transparent;
+}
+#user_id{
+		background-image: url(../img/Rectangle.png);
+	background-repeat: no-repeat;
+	background-size: 100%;
+	background-position: center;
+	background-color: transparent;
+	border-color: transparent;
+	color: white;
+	font-size: 14px;
+	line-height:30px;
+
+}
+#password2{
+		background-image: url(../img/Rectangle.png);
+	background-repeat: no-repeat;
+	background-size: 100%;
+	background-position: center;
+	background-color: transparent;
+	border-color: transparent;
+	color: white;
+	font-size: 14px;
+	line-height:30px;
+
+}
+#password1{
+		background-image: url(../img/Rectangle.png);
+	background-repeat: no-repeat;
+	background-size: 100%;
+	background-position: center;
+	background-color: transparent;
+	border-color: transparent;
+	color: white;
+	font-size: 14px;
+	line-height:30px;
+
+}
+#password{
+		background-image: url(../img/Rectangle.png);
+	background-repeat: no-repeat;
+	background-size: 100%;
+	background-position: center;
+	background-color: transparent;
+	border-color: transparent;
+	color: white;
+	font-size: 14px;
+	line-height:30px;
+
+}
+#register_submit{
+	background-color: transparent;
+	color: white;
+	border-color: transparent;
+	font-size: 14px;
+
+}
+#login_submit{
+	background-color: transparent;
+	color: white;
+	border-color: transparent;
+	font-size: 14px;
+
+}
+.regbt{
+	color: white;
+	font-size:14px;
+}
