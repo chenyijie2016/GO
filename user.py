@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import json
 
 USER_DATABASE_FILE = 'user_database/user_list.db'

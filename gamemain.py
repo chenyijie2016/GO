@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import time
 import user
 import game_function as gf

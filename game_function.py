@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # 实时处理游戏信息
 
 import json
