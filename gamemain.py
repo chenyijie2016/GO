@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 import time
 import user
 import game_function as gf
@@ -37,6 +39,8 @@ def register(gameuser):
     """
     if user.register(gameuser):
         print('成功注册用户:', gameuser['user_id'])
+        user.set_user_information(
+            {'user_id': gameuser['user_id'], 'rank': 1000, 'grade': '18k', 'country': 'cn', 'intr': 'none'})
         return True
     else:
         return False
@@ -87,3 +91,7 @@ def get_wait_game():
     :return: 
     """
     return gf.get_wait_game()
+
+
+def get_user_information(user_):
+    return user.get_user_information(user_)

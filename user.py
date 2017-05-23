@@ -1,6 +1,7 @@
 import json
 
 USER_DATABASE_FILE = 'user_database/user_list.db'
+USER_INFORMATION_DATABASE_FILE = 'user_database/user_info.db'
 
 
 # 注意:注册前必须要有该路径和数据文件
@@ -43,5 +44,59 @@ def login(user):
         if user['user_id'] == pre_user['user_id']:
             if user['password'] == pre_user['password']:
                 return True
+
+    return False
+
+
+def set_user_information(user_info):
+    """
+    设置用户信息
+    :param user_info: 
+    """
+    info_db = open(USER_INFORMATION_DATABASE_FILE, 'r')
+    info_list = json.loads(info_db.read())
+    info_db.close()
+
+    if check_id_in_list(user_info['user_id'], info_list):
+
+        for info in info_list:
+            if info['user_id'] == user_info['user_id']:
+                info['user_id'] = user_info['user_id']
+    else:
+
+        info_list.append(user_info)
+
+    info_db = open(USER_INFORMATION_DATABASE_FILE, 'w')
+    info_db.write(json.dumps(info_list))
+    info_db.close()
+
+
+def get_user_information(user):
+    """
+    获取用户信息
+    :param user: 
+    :return: 
+    """
+    info_db = open(USER_INFORMATION_DATABASE_FILE, 'r')
+    info_list = json.loads(info_db.read())
+    info_db.close()
+
+    for info in info_list:
+        if info['user_id'] == user['user_id']:
+            return info
+
+    raise 'Can Not Find User In DataBase'
+
+
+def check_id_in_list(id, list_to_check):
+    """
+    检测该id是否在数据库中出现
+    :param id: 
+    :param list_to_check: 
+    :return: 
+    """
+    for x in list_to_check:
+        if x['user_id'] == id:
+            return True
 
     return False
