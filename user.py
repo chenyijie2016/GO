@@ -88,6 +88,23 @@ def get_user_information(user):
     raise 'Can Not Find User In DataBase'
 
 
+def modify_user_information(user_info):
+    info_db = open(USER_INFORMATION_DATABASE_FILE, 'r')
+    info_list = json.loads(info_db.read())
+    info_db.close()
+
+    for info in info_list:
+        if info['user_id'] == user_info['user_id']:
+            info['country'] = user_info['country']
+            info['intr'] = user_info['intr']
+
+    info_db = open(USER_INFORMATION_DATABASE_FILE, 'w')
+    info_db.write(json.dumps(info_list))
+    info_db.close()
+
+
+
+
 def check_id_in_list(id, list_to_check):
     """
     检测该id是否在数据库中出现

@@ -34,11 +34,13 @@ def login_html():
         print('登录')
     return render_template('static/login.html')
 
+
 @app.route('/information')
 def information():
     if DEBUG:
         pass
     return render_template('static/information.html')
+
 
 # 以下是接受到各个不同事件时的处理函数
 
@@ -172,6 +174,15 @@ def send_information(msg):
     if DEBUG:
         print('获取用户信息')
     emit('user_information', gamemain.get_user_information(msg))
+
+
+@socketio.on('set_user_information')
+def modify_information(msg):
+    if DEBUG:
+        print('修改用户信息', msg)
+
+    gamemain.modify_user_information(msg)
+    emit('set_user_information_reply_ok', {})
 
 
 if __name__ == '__main__':

@@ -119,3 +119,7 @@
 	font-size: 15px;
     font-family: "微软雅黑 Light";
 }
+a:link {color:#000000;}     
+a:visited {color:#000000;}  
+a:hover {color:#000000;}  
+a:active {color:#000000;} 
