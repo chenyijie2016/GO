@@ -164,11 +164,14 @@
 	var game_started = 0;
 	var side_me; // 记录我方黑白棋状态
 	var now_side; //设置当前下棋的一方
-
+    
+    //每一次棋盘重绘之后都会执行下面的回调函数
+    //即每次playAt后会执行
+    //注意，每次悔棋(undo)也会执行下面的函数！！！！！
 	game.callbacks.postRender = function(game) {
 
 		console.log(game.currentState())
-
+        //game.currentState() -- 游戏当前状态
 
 		if (game.currentState().pass) {
 			console.log(game.currentState().color + " passed");
@@ -177,7 +180,11 @@
 		if (game.currentState().playedPoint) {
 
 			console.log(game.currentState().color + " played " + game.currentState().playedPoint.y + "," + game.currentState().playedPoint.x);
-
+            /*
+            *game.currentState().color--最近落子方
+            *game.currentState().playedPoint.y，game.currentState().playedPoint.x 最近落子坐标
+            *
+            */
 			var x = game.currentState().playedPoint.x;
 			var y = game.currentState().playedPoint.y;
 
@@ -187,11 +194,19 @@
 				game.undo();
 				return;
 			}
+            //如果游戏还没有开始，此时落子后自动undo
 			if (DEBUG)
 			{
 				console.log('能否落子(校验前):' + canplace);
 			}
-
+            //TODO 添加检验代码使得在非法情况下的落子可以被忽略
+            
+            //一个推荐的方法是使用undo
+            
+            //比较麻烦的原因是无论哪方落子都会触发该函数，并且该函数无法分辨落子
+            //是由点击棋盘还是使用内置函数产生的
+            //但是使用undo后也会触发该函数，需要额外的判断
+            //
 
 			/*if(canplace == false && only_one_undo)
 			{
@@ -200,7 +215,7 @@
 				game.undo();
 				return;
 			}*/
-
+            /*
 			if(game.currentState().color != side_me)
 			{
 				if(canplace == false)
@@ -218,8 +233,10 @@
 			{
 				console.log('能否落子(校验后):' + canplace);
 			}
-
-
+            */
+            
+            
+            //下面是发送落子消息到服务端
 			var msg;
 
 			if (side_me == 'black')
