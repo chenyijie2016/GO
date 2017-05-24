@@ -51,6 +51,12 @@
 			document.getElementById("haha").src = "{{ url_for("static",filename = "img/Group.png")}}"
 		}
 	</script>
+
+
+
+	<script type="text/javascript" src="{{url_for('static',filename='js/tenuki.js')}}"></script>
+	<link href="{{url_for("static", filename="css/tenuki.css")}}" rel="stylesheet" type="text/css">
+
 	<!--<script href="{{ url_for('static',filename='js/user.js') }}" type="text/javascript"></script>-->
 </head>
 <body class="Body1">
@@ -117,9 +123,7 @@
 
 
 
-		<canvas id="myCanvas" height="500" width="500">
-			your browser does not support the canvas tag
-		</canvas>
+		<div class="tenuki-board tenuki-board-textured" style="align-content: center;margin: auto"></div>
 
 
 
@@ -148,648 +152,124 @@
 
 
 <script>
+	var DEBUG = true;
+	var only_one_undo = true;
+	var canplace = false;
+	var boardElement = document.querySelector(".tenuki-board");
+	var game = new tenuki.Game(boardElement);
+	game.setup();
 
 
-	var total_width = 500,//画布宽
-		total_height = 500,//画布高
-		chessboard_start_x = 30,//棋盘起始x坐标
-		chessboard_start_y = 30,//棋盘起始y坐标
-		chessboard_end_x = total_width - 20,//棋盘结束x坐标
-		chessboard_end_y = total_height - 20,//棋盘结束y坐标
-		company_x = (chessboard_end_x - chessboard_start_x) / 18,//单元格宽度
-		company_y = (chessboard_end_y - chessboard_start_y) / 18;//单元格高度
-
-	var step = 0;//当前步骤
-	var viewstep = 0;//回看时的步骤
-	var isview = false;//是否在查看过往步骤
 	var string = 'abcdefghijklmnoprstuvwxyz';
 	var game_started = 0;
 	var side_me; // 记录我方黑白棋状态
-	var canplace = false;
-	var now_side;//设置当前下棋的一方
+	var now_side; //设置当前下棋的一方
 
-	var initarr = function (arr)
-	{
-		for (var i = 0; i < 19; i++)
-		{
-			var arrj = new Array(19);
-			for (var j = 0; j < 19; j++)
+	game.callbacks.postRender = function(game) {
+
+		console.log(game.currentState())
+
+
+		if (game.currentState().pass) {
+			console.log(game.currentState().color + " passed");
+		}
+
+		if (game.currentState().playedPoint) {
+
+			console.log(game.currentState().color + " played " + game.currentState().playedPoint.y + "," + game.currentState().playedPoint.x);
+
+			var x = game.currentState().playedPoint.x;
+			var y = game.currentState().playedPoint.y;
+
+
+			if (game_started == 0)
 			{
-				arrj[j] = 0;
+				game.undo();
+				return;
 			}
-			arr[i] = arrj;
-		}
-		return arr;
-	}
-	var black_arr = new Array(19);//新建一个二维数组，用于存储当前步骤的棋子布局
-	black_arr = initarr(black_arr);
-
-	var white_arr = new Array(19);//新建一个二维数组，用于存储当前步骤的棋子布局
-	white_arr = initarr(white_arr);
-
-
-	var obj = new Object();
-	obj.record = {};
-	localStorage.setItem("gogame", JSON.stringify(obj));
-	//存储本步骤的棋盘数组
-	var savestep = function ()
-	{
-		obj = JSON.parse(localStorage.getItem("gogame"));
-		obj.record[step] = arr;
-		localStorage.setItem("gogame", JSON.stringify(obj));
-		step++;
-		//document.querySelector("#totalstep").innerHTML = step;
-	}
-
-	var arr = new Array(19);//新建一个二维数组，用于存储当前步骤的棋子布局
-	for (var i = 0; i < 19; i++)
-	{
-		var arrj = new Array(19);
-		for (var j = 0; j < 19; j++)
-		{
-			arrj[j] = 0;
-		}
-		arr[i] = arrj;
-	}
-
-	var side = "black";//白方、黑方、围观群众
-
-	//切换落子方
-	var changeside = function ()
-	{
-		//切换黑白子
-		if (side == "white")
-		{
-			side = "black";
-		}
-		else if (side == "black")
-		{
-			side = "white";
-		}
-	}
-
-	//预留方法，选择当前落子方
-	var chooseside = function (choose_side)
-	{
-		if (choose_side == "lookers")
-		{
-			$(document).unbind("click");
-			//bindclick();
-		}
-		else
-		{
-			side = choose_side;
-			$(document).unbind("click");
-			bindclick();
-		}
-	}
-
-	var piece_percentage = 0.8; //棋子占格子大小的百分比
-	var piece_radius = (company_x - company_y >= 0) ? (company_x * piece_percentage / 2) : (company_y * piece_percentage / 2);//棋子大小
-
-	//获取鼠标当前位置坐标
-	$(document).bind('mousemove', function (e)
-	{
-		var canvasOffset = $(canvas).offset();//获取canvas的坐标
-		var canvasX = Math.floor(e.pageX - canvasOffset.left);
-		var canvasY = Math.floor(e.pageY - canvasOffset.top);
-		$("#log").text("e.pageX: " + e.pageX + ", e.pageY: " + e.pageY + ",X:" + canvasX + ",Y:" + canvasY);
-	});
-
-	//获取canvas画布
-	var canvas = document.getElementById('myCanvas');
-	canvas.height = total_height;
-	canvas.width = total_width;
-	var cxt = canvas.getContext('2d');
-
-	//画棋盘
-	var drawBoard = function ()
-	{
-		//每次重画棋盘之前清除canvas
-		cxt.clearRect(0, 0, canvas.width, canvas.height);
-
-		cxt.beginPath();
-		//描绘横线
-		for (var i = 0; i < 19; i++)
-		{
-			var start_company_x = chessboard_start_x;
-			var start_company_y = chessboard_start_y + company_y * i;
-			var end_company_x = chessboard_end_x;
-			var end_company_y = chessboard_start_y + company_y * i;
-			cxt.lineWidth = 2;
-			cxt.moveTo(start_company_x, start_company_y);
-			cxt.lineTo(end_company_x, end_company_y);
-		}
-
-		//描绘竖线
-		for (var j = 0; j < 19; j++)
-		{
-			var start_company_x = chessboard_start_x + company_x * j;
-			var start_company_y = chessboard_start_y;
-			var end_company_x = chessboard_start_x + company_x * j;
-			var end_company_y = chessboard_end_y;
-			cxt.moveTo(start_company_x, start_company_y);
-			cxt.lineTo(end_company_x, end_company_y);
-		}
-		cxt.stroke();
-
-		//画九星
-		for (var i = 0; i < 3; i++)
-		{
-			var star_y = chessboard_start_y + company_y * (i * 6 + 3);
-			for (var j = 0; j < 3; j++)
+			if (DEBUG)
 			{
-				var star_x = chessboard_start_x + company_y * (j * 6 + 3);
-				cxt.fillStyle = "black";
-				cxt.beginPath();
-				cxt.arc(star_x, star_y, 4, 0, Math.PI * 2, false);
-				cxt.stroke();
-				cxt.fill();
+				console.log('能否落子(校验前):' + canplace);
 			}
+
+
+			/*if(canplace == false && only_one_undo)
+			{
+				//only_one_undo = false;
+				console.log('当前不可落子');
+				game.undo();
+				return;
+			}*/
+
+			if(game.currentState().color != side_me)
+			{
+				if(canplace == false)
+				{
+					game.undo()
+					return;
+				}
+			}
+			else
+			{
+				canplace = false;
+			}
+
+			if (DEBUG)
+			{
+				console.log('能否落子(校验后):' + canplace);
+			}
+
+
+			var msg;
+
+			if (side_me == 'black')
+			{
+				msg='B';
+			}
+			else
+			{
+				msg='W';
+			}
+			msg += '[' +string[y] + string[x] + ']';
+
+			sendmsg(msg);
+
 		}
 	};
-
-	//根据arr数组画棋子
-	var drawPiece = function ()
+/*
+	function start_go(side)
 	{
-		for (var i in arr)
-		{
-			for (var j in arr[i])
-			{
-				if (arr[i][j] == 1)
-				{
-					//画黑子
-					var start_x = i * company_x + chessboard_start_x;//点击的x坐标起始位置
-					var start_y = j * company_y + chessboard_start_y;//点击的y坐标起始位置
-
-					cxt.fillStyle = "black";
-					cxt.beginPath();
-					cxt.arc(start_x, start_y, piece_radius, 0, Math.PI * 2, false);
-					cxt.stroke();
-					cxt.fill();
-				}
-				else if (arr[i][j] == 2)
-				{
-					//画白子
-					var start_x = i * company_x + chessboard_start_x;//点击的x坐标起始位置
-					var start_y = j * company_y + chessboard_start_y;//点击的y坐标起始位置
-
-					cxt.fillStyle = "white";
-					cxt.beginPath();
-					cxt.arc(start_x, start_y, piece_radius, 0, Math.PI * 2, false);
-					cxt.stroke();
-					cxt.fill();
-				}
-			}
-		}
-	};
-
-	//检查该落子是否可以提子，可以就提子
-	var checkPiece = function (coordinate_x, coordinate_y)
-	{
-		var myside = 0;
-		var otherside = 0;
-		var iskill = false;
-		if (now_side == "black")
-		{
-			myside = 1;
-			otherside = 2;
-		}
-		else if (now_side == "white")
-		{
-			myside = 2;
-			otherside = 1;
-		}
-		console.log('myside:', myside, 'otherside:', otherside)
-		//如果该子上方是对方棋子或者为第一行
-		if ((coordinate_y > 0 && arr[coordinate_x][coordinate_y - 1] == otherside))
-		{
-			if (checkOthersidePiece(coordinate_x, coordinate_y - 1, otherside))
-			{
-				iskill = true;
-			}
-		}
-		//如果该子左方是对方棋子或者为第一行
-		if ((coordinate_x > 0 && arr[coordinate_x - 1][coordinate_y] == otherside))
-		{
-			if (checkOthersidePiece(coordinate_x - 1, coordinate_y, otherside))
-			{
-				iskill = true;
-			}
-		}
-		//如果该子右方是对方棋子或者为第十九行
-		if ((coordinate_x < 18 && arr[coordinate_x + 1][coordinate_y] == otherside))
-		{
-			if (checkOthersidePiece(coordinate_x + 1, coordinate_y, otherside))
-			{
-				iskill = true;
-			}
-		}
-		//如果该子下方是对方棋子或者为第十九行
-		if ((coordinate_y < 18 && arr[coordinate_x][coordinate_y + 1] == otherside))
-		{
-			if (checkOthersidePiece(coordinate_x, coordinate_y + 1, otherside))
-			{
-				iskill = true;
-			}
-		}
-
-		//如果有提掉对方棋子
-		if (iskill == true)
-		{
-
-			//监测本子落子后己方棋子是否会被提
-		}
-		else
-		{
-			//alert(JSON.stringify(arr));
-			checkOthersidePiece(coordinate_x, coordinate_y, myside);
-		}
-	}
-
-	/**
-	 * 检查该子是否会被提,若能被提，提子
-	 * @param coordinate_x （该子x坐标）
-	 * @param coordinate_y （该子y坐标）
-	 * @param side 1(黑子) or 2（白子）
-	 */
-	var checkOthersidePiece = function (coordinate_x, coordinate_y, theside)
-	{
-		//新建一个二维数组，用于排放与该子连接的本方棋子
-		var connection_arr = new Array(19);
-		for (var i = 0; i < 19; i++)
-		{
-			var connection_arrj = new Array(19);
-			for (var j = 0; j < 19; j++)
-			{
-				connection_arrj[j] = 0;
-			}
-			connection_arr[i] = connection_arrj;
-		}
-		var isdead = true;//是否被提，默认为被提
-		var deadcount = 0;
-
-		//alert("1111"+JSON.stringify(connection_arr)+coordinate_x+":"+coordinate_y);
-		//将所有与本子相连的同色棋子组成本数组
-		connection_arr = setconnection_arr(connection_arr, coordinate_x, coordinate_y, theside);
-		//alert("2222"+JSON.stringify(connection_arr));
-
-		//遍历该connection_arr数组，若有3则，不死
-		for (var i in connection_arr)
-		{
-			for (var j in connection_arr[i])
-			{
-				if (connection_arr[i][j] == 3)
-				{
-					//console.log("i+j:"+i+"+"+j);
-					isdead = false;
-				}
-			}
-		}
-
-		//如果会被提，则提子
-		if (isdead == true)
-		{
-			console.log(connection_arr)
-			console.log('准备提子:side' + theside);
-			for (var i in connection_arr)
-			{
-				for (var j in connection_arr[i])
-				{
-					if (connection_arr[i][j] == theside)
+		game.setup({
+			player: side,
+			gameOptions: {
+				boardSize: 19
+			},
+			hooks: {
+				submitPlay: function(playedY, playedX, result) {
+					if (side_me == 'black')
 					{
-						arr[i][j] = 0;
-						deadcount++;
-
-						//将connection_arr中标志位为side的数组放入his_arr中供提子限制规则查询使用
-						if (theside == 1)
-						{
-							black_arr[i][j] = theside;
-						}
-						else if (theside == 2)
-						{
-							white_arr[i][j] = theside;
-						}
-
-					}
-				}
-			}
-		}
-
-
-		console.log("isdead:" + isdead + ":提子数量:" + deadcount);
-		//若有提子返回true
-		if (deadcount > 0)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	};
-
-	/**
-	 * 递归组织连接的此方棋子
-	 * @param connection_arr
-	 * @param coordinate_x
-	 * @param coordinate_y
-	 * @param side
-	 * @return {*}
-	 */
-	var setconnection_arr = function (connection_arr, coordinate_x, coordinate_y, theside)
-	{
-		//设置数组为本块相连的
-		if (connection_arr[coordinate_x][coordinate_y] != theside && arr[coordinate_x][coordinate_y] == theside)
-		{
-			connection_arr[coordinate_x][coordinate_y] = theside;
-			console.log(coordinate_x + "====" + coordinate_y);
-			//如果该黑子上方是白子并且不为第一行
-			if (coordinate_y > 0 && arr[coordinate_x][coordinate_y - 1] == theside)
-			{
-				connection_arr = setconnection_arr(connection_arr, coordinate_x, coordinate_y - 1, theside);
-			}
-			else if (coordinate_y > 0 && arr[coordinate_x][coordinate_y - 1] == 0)
-			{
-				connection_arr[coordinate_x][coordinate_y - 1] = 3;
-			}
-			//如果该黑子左方是白子或者为第一行
-			if (coordinate_x > 0 && arr[coordinate_x - 1][coordinate_y] == theside)
-			{
-				connection_arr = setconnection_arr(connection_arr, coordinate_x - 1, coordinate_y, theside);
-			}
-			else if (coordinate_x > 0 && arr[coordinate_x - 1][coordinate_y] == 0)
-			{
-				connection_arr[coordinate_x - 1][coordinate_y] = 3;
-			}
-			//如果该黑子右方是白子或者为第十九行
-			if (coordinate_x < 18 && arr[coordinate_x + 1][coordinate_y] == theside)
-			{
-				connection_arr = setconnection_arr(connection_arr, coordinate_x + 1, coordinate_y, theside);
-			}
-			else if (coordinate_x < 18 && arr[coordinate_x + 1][coordinate_y] == 0)
-			{
-				connection_arr[coordinate_x + 1][coordinate_y] = 3;
-			}
-			//如果该黑子下方是白子或者为第十九行
-			if (coordinate_y < 18 && arr[coordinate_x][coordinate_y + 1] == theside)
-			{
-				connection_arr = setconnection_arr(connection_arr, coordinate_x, coordinate_y + 1, theside);
-			}
-			else if (coordinate_y < 18 && arr[coordinate_x][coordinate_y + 1] == 0)
-			{
-				connection_arr[coordinate_x][coordinate_y + 1] = 3;
-			}
-		}
-
-		//console.log("x:"+coordinate_x+"y:"+coordinate_y);
-		return connection_arr;
-	};
-
-	//显示被吃的子
-	var showkilled = function ()
-	{
-		var blackinfo = "";
-		for (var i = 0; i < 19; i++)
-		{
-			for (var j = 0; j < 19; j++)
-			{
-				if (black_arr[i][j] == 1)
-				{
-					blackinfo = blackinfo + "[" + (i + 1) + ":" + (j + 1) + "],";
-				}
-			}
-		}
-
-		var whiteinfo = "";
-		for (var i = 0; i < 19; i++)
-		{
-			for (var j = 0; j < 19; j++)
-			{
-				if (white_arr[i][j] == 2)
-				{
-					whiteinfo = whiteinfo + "[" + (i + 1) + "," + (j + 1) + "],";
-				}
-			}
-		}
-
-		if (blackinfo != "")
-		{
-			blackinfo = "黑方被提子:" + blackinfo
-		}
-		if (whiteinfo != "")
-		{
-			whiteinfo = "白方被提子:" + whiteinfo
-		}
-		console.log(blackinfo + "<br>" + whiteinfo);
-		$("#blackinfo").html(blackinfo);
-		$("#whiteinfo").html(whiteinfo);
-	};
-
-
-	//添加点击触发事件
-	var bindclick = function ()
-	{
-		$(document).bind('click', function (e)
-		{
-			var canvasOffset = $(canvas).offset();//获取canvas的坐标
-			var canvasX = Math.floor(e.pageX - canvasOffset.left);
-			var canvasY = Math.floor(e.pageY - canvasOffset.top);
-			var click_x = parseInt((canvasX - (chessboard_start_x - company_x / 2)) / company_x) + 1;//点击的x坐标
-			var click_y = parseInt((canvasY - (chessboard_start_y - company_y / 2)) / company_y) + 1;//点击的y坐标
-			click_x = (click_x >= 1 && click_x <= 19) ? click_x : -10;
-			click_y = (click_y >= 1 && click_y <= 19) ? click_y : -10;
-			if (game_started == 1)
-			{
-				if (click_x >= 1 && click_x <= 19 && click_y >= 1 && click_y <= 19)
-				{
-					if (canplace)
-					{
-
-						//如果此处没有棋子
-						if (arr[click_x - 1][click_y - 1] == 0)
-						{
-							console.log(step + ":" + viewstep);
-							if (isview == false)
-							{
-								/*//填入棋子
-								 if(side == "black"){
-								 arr[click_x-1][click_y-1] = 1;
-								 } else if (side == "white"){
-								 arr[click_x-1][click_y-1] = 2;
-								 }*/
-
-								//判断是否在不可着子区域
-								if (side_me == "black")
-								{
-									if (black_arr [click_x - 1] [click_y - 1] == 1)
-									{
-										alert("根据规则，此处不可马上下子，\n请在别处另着一子后再回来！！！");
-									}
-									else
-									{
-										//将消息置空
-										setsystemmessage('');
-
-										now_side = "black";
-										arr [click_x - 1] [click_y - 1] = 1;
-
-
-										//将监测是否可以提子的数组置为19*19的0数组
-										black_arr = initarr(black_arr);
-
-										//检查是否可以提子，可以提子就提子
-										checkPiece(click_x - 1, click_y - 1);
-
-										showkilled();
-
-										//存储步骤
-										savestep();
-
-										//画棋盘
-										drawBoard();
-										//画棋子
-										drawPiece();
-										//换种颜色的棋子
-										//changeside();
-										sendmsg('B[' + string.substr(click_x - 1, 1) + string.substr(click_y - 1, 1) + ']');
-										canplace = false;
-
-									}
-								}
-								else if (side_me == "white")
-								{
-									if (white_arr[click_x - 1][click_y - 1] == 2)
-									{
-										alert("根据规则，此处不可马上下子，\n请在别处另着一子后再回来！！！");
-									}
-									else
-									{
-										//将消息置空
-										setsystemmessage('');
-										now_side = "white";
-										arr[click_x - 1][click_y - 1] = 2;
-
-										//将监测是否可以提子的数组置为19*19的0数组
-										white_arr = initarr(white_arr);
-
-										//检查是否可以提子，可以提子就提子
-										checkPiece(click_x - 1, click_y - 1);
-
-										showkilled();
-
-										//存储步骤
-										savestep();
-
-										//画棋盘
-										drawBoard();
-										//画棋子
-										drawPiece();
-										//换种颜色的棋子
-										//changeside();
-
-										sendmsg('W[' + string.substr(click_x - 1, 1) + string.substr(click_y - 1, 1) + ']');
-										canplace = false;
-									}
-								}
-
-							}
-							else
-							{
-								//alert("落子无悔大丈夫，请回到当前步骤落子！");
-								//alert("现在是回顾战局模式，请回到对弈模式落子！！！");
-								setsystemmessage('现在是回顾战局模式，请回到对弈模式落子！！！');
-							}
-
-						}
-						else
-						{
-							//alert("此处已有棋子，不可着子！");
-							setsystemmessage('此处已有棋子，不可着子！');
-						}
+						sendmsg('B[' + string[playedY] + string[playedX] + ']');
 					}
 					else
 					{
-						setsystemmessage('现在还不是你的回合！')
+						sendmsg('W[' + string[playedY] + string[playedX] + ']');
 					}
+					game._game.playAt(playedY, playedX);
+				},
+
+				submitMarkDeadAt: function(y, x, stones, result) {
+
+				},
+
+				submitPass: function(result) {
+
 				}
 			}
-			else
-			{
-				if (click_x >= 1 && click_x <= 19 && click_y >= 1 && click_y <= 19)
-				{
-					//alert('游戏尚未开始!');
-					setsystemmessage('游戏尚未开始，正在等待其他用户连接！');
-				}
-			}
-		});
-
-	};
-
-	//进入回顾战局模式
-	var viewstep = function (thisstep)
-	{
-		if (!isNaN(parseInt(thisstep)) && parseInt(thisstep) >= 1)
-		{
-			thisstep = thisstep - 1;
-
-			if (parseInt(thisstep) < step)
-			{
-				getstep(thisstep);
-				isview = true;
-			}
-			else
-			{
-				//alert("所输步骤超出总步骤，请重输！！！");
-				setsystemmessage('所输步骤超出总步骤，请重输！！！');
-			}
-
-		}
-		else
-		{
-			alert("请输入回顾的步骤，步骤必须为整数！！！");
-			setsystemmessage('请输入回顾的步骤，步骤必须为整数！！！');
-		}
-
+		});;
 	}
+*/
 
-	//继续对弈
-	var continuego = function ()
-	{
-		isview = false;
-		getstep(step - 1);
-	}
 
-	//获取该步骤的棋局
-	var getstep = function (thisstep)
-	{
-
-		obj = JSON.parse(localStorage.getItem("gogame"));
-
-		if (parseInt(thisstep) < step)
-		{
-			arr = obj.record[thisstep];
-		}
-		else
-		{
-			setsystemmessage('超出总步骤');
-			alert("超出总步骤");
-		}
-
-		//画棋盘
-		drawBoard();
-		//画棋子
-		drawPiece();
-		//设置下一步的落子方
-		if (step % 2 == 0)
-		{
-			side = "black";
-		}
-		else
-		{
-			side = "white";
-		}
-	};
 
 
 	function logout()
@@ -803,7 +283,7 @@
 
 	function check_login(cookie)
 	{
-		console.log(cookie);
+
 		if (cookie.match(/login=true/))
 		{
 			return true;
@@ -824,10 +304,9 @@
 	}
 	function checkcookies(allcookies)
 	{
-		console.log(allcookies);
-		console.log(allcookies.replace(" ", ""));
+
 		var cookies_list = allcookies.replace(" ", "").split(";");
-		console.log(cookies_list);
+
 		if (cookies_list.some(check_login))
 		{
 			$('#login_reg').css('display','none');
@@ -843,17 +322,12 @@
 		}
 	}
 	var socket = io.connect();
-	var DEBUG = true;
+
 	$(document).ready(function ()
 	{
 		var allcookies = document.cookie;
 
 		checkcookies(allcookies);
-//初始化页面canvas
-//绑定点击事件
-		bindclick();
-//画棋盘
-		drawBoard();
 		socket.on('connect', function ()
 		{
 			//socket.emit('connect_event', {data: '连接成功'});
@@ -879,26 +353,33 @@
 				alert('成功创建游戏，ID为:' + msg.game_id);
 				side_me = msg.side;
 				game_started = 0;
-				//setmessage(side_me);
+
 			}
 			if (msg.game_id == $('#game_id').val() && msg.user_id != $('#user_id').val() && msg.begin == 1)
 			{
 				alert('另一个用户成功连接,游戏开始!');
 				$('#gameinfo').text($('#user_id').val() + '(黑)和' + msg.user_id + '(白)的对决');
-				//myside = msg.side;
 				$('div#player_side').text('你执黑棋');
 				game_started = 1;
+				now_side='black';
+				side_me = 'black';
+
 				canplace = true;
+				//start_go('black');
+				//game.setSide('black');
 			}
 			if (msg.game_id == $('#game_id').val() && msg.user_id == $('#user_id').val() && msg.begin == 1)
 			{
 				alert('成功连接游戏,游戏开始!');
 				$('#gameinfo').text(msg.emeny + '(黑)和' + $('#user_id').val() + '(白)的对决');
 				side_me = 'white';
-				side = 'white';
+				now_side = 'black';
+				//start_go('white');
 				game_started = 1;
+				//game.setSide('white');
+				canplace = false;
 				$('div#player_side').text('你执白棋');
-				//setmessage(side_me);
+
 			}
 		}
 	);
@@ -917,49 +398,42 @@
 		{
 			//alert('接受到信息');
 			//game = eval('new Map(' + msg.data + ')');
-			if (DEBUG)
+
+			var game_msg = msg;
+			if (game_msg.game_id == $('#game_id').val() && game_msg.user_id != $('#user_id').val())
 			{
-				console.log(msg)
-			}
-			var game = msg;
-			if (game.game_id == $('#game_id').val() && game.user_id != $('#user_id').val())
-			{
-				var place = game.msg;
+				var place = game_msg.msg;
 				var letter_x = place.charAt(2);
 				var letter_y = place.charAt(3);
 				var n_x = string.indexOf(letter_x);
 				var n_y = string.indexOf(letter_y);
+				if(DEBUG)
+				{
+					console.log('收到落子消息')
+					console.log(msg)
+				}
+
+				game.playAt(n_x,n_y);
+				canplace = true;
+				//game.receivePlay(n_x,n_y);
+
 				setsystemmessage('敌方落子:[' + letter_x + ',' + letter_y + ']\n现在轮到我方落子');
+
 				if (place.charAt(0) == 'B')
 				{
-					now_side = "black";
-					arr[n_x][n_y] = 1;
-				}
-				else
-				{
 					now_side = "white";
-					arr[n_x][n_y] = 2;
-				}
-				if (side_me == 'white')
-				{
-					black_arr = initarr(black_arr);
 				}
 				else
 				{
-					white_arr = initarr(white_arr);
+					now_side = "black";
 				}
-				//检查是否可以提子，可以提子就提子
-				checkPiece(n_x, n_y);
-				showkilled();
-				//存储步骤
-				savestep();
-				//画棋盘
-				drawBoard();
-				//画棋子
-				drawPiece();
-				//换种颜色的棋子
-				//changeside();
-				canplace = true;
+				if(DEBUG)
+				{
+					console.log('改变当前势力');
+					console.log(now_side);
+				}
+
+
 			}
 		}
 	);
@@ -975,16 +449,19 @@
 	socket.on('message', function (msg)
 	{
 		//只有game_id一致时才显示
-		if (DEBUG)
-		{
-			console.log('收到聊天信息', msg)
-		}
+
 		if (msg.game_id == $('#game_id').val())
 		{
 			setmessage(msg.user_id + ':' + msg.message);
+			if (DEBUG)
+			{
+				console.log('收到聊天信息', msg)
+			}
 		}
 	});
+
 	//发送落子消息
+
 	function sendmsg(msg)
 	{
 		if (DEBUG)
@@ -993,6 +470,7 @@
 		}
 		socket.emit('play_game_server', {user_id: $('#user_id').val(), game_id: $('#game_id').val(), msg: msg})
 	}
+
 	function get_game_info()
 	{
 		socket.emit('get_wait_game', {});
