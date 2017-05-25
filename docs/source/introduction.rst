@@ -5,7 +5,7 @@ Introduction
 目录说明
 --------
 
-前端---wgo.js
+前端---tenuki.js
 ~~~~~~~~~~~~~~
 
 * static/:返回的网页文件
