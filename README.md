@@ -1,28 +1,28 @@
-# Ä¿Â¼ËµÃ÷
+# ç›®å½•è¯´æ˜
 
-## Ç°¶Ë---wgo.js
-- static/:·µ»ØµÄÍøÒ³ÎÄ¼ş
+## å‰ç«¯---tenuki.js
+- static/:è¿”å›çš„ç½‘é¡µæ–‡ä»¶
 
-## ºó¶Ë---flask
-- server.py:·şÎñ¶ËÖ÷½ø³Ì,¿ÉÒÔÌí¼ÓÓëÇ°¶Ë¶ÔÓ¦µÄÍ¨ĞÅÄ£¿é,ĞÅÏ¢´¦ÀíÔÚÆäËûÎÄ¼şÖĞÊµÏÖ
-- gamemain.py:¸ºÔğ´¦ÀíÓë¶Ô¾ÖÓĞ¹ØµÄĞÅÏ¢
-- user.py:¸ºÔğÓÃ»§µÇÂ¼¡¢×¢²á¡¢ĞÅÏ¢¸üĞÂ±£´æµÄ·½Ãæ
-- blockchain.py:¸ºÔğÇø¿éÁ´Êı¾İ´¦Àí(ÉĞÎ´ÊµÏÖ)
-- AI.py:AI½Ó¿Ú(ÉĞÎ´ÊµÏÖ)
-- (Î´Íê´ı¸üĞÂ)
+## åç«¯---flask
+- server.py:æœåŠ¡ç«¯ä¸»è¿›ç¨‹,å¯ä»¥æ·»åŠ ä¸å‰ç«¯å¯¹åº”çš„é€šä¿¡æ¨¡å—,ä¿¡æ¯å¤„ç†åœ¨å…¶ä»–æ–‡ä»¶ä¸­å®ç°
+- gamemain.py:è´Ÿè´£å¤„ç†ä¸å¯¹å±€æœ‰å…³çš„ä¿¡æ¯
+- user.py:è´Ÿè´£ç”¨æˆ·ç™»å½•ã€æ³¨å†Œã€ä¿¡æ¯æ›´æ–°ä¿å­˜çš„æ–¹é¢
+- blockchain.py:è´Ÿè´£åŒºå—é“¾æ•°æ®å¤„ç†(å°šæœªå®ç°)
+- AI.py:AIæ¥å£(å°šæœªå®ç°)
+- (æœªå®Œå¾…æ›´æ–°)
 
-## Êı¾İ¿â²¿·Ö---mongodb
-- user_database/:ÓëÓÃ»§ÓĞ¹ØµÄÊı¾İ¿â
-- game_database/:ÓÎÏ·¼ÇÂ¼Êı¾İ¿â
+## æ•°æ®åº“éƒ¨åˆ†---mongodb
+- user_database/:ä¸ç”¨æˆ·æœ‰å…³çš„æ•°æ®åº“
+- game_database/:æ¸¸æˆè®°å½•æ•°æ®åº“
 
-# Ïà¹Ø½Ì³Ì
-Python flask£º
-http://docs.jinkan.org/docs/flask/index.html(±Ø¶Á£©
+# ç›¸å…³æ•™ç¨‹
+Python flaskï¼š
+http://docs.jinkan.org/docs/flask/index.html(å¿…è¯»ï¼‰
 
 JavaScript jQuery:
-http://www.w3school.com.cn/jquery/index.asp£¨±Ø¶Á£©
+http://www.w3school.com.cn/jquery/index.aspï¼ˆå¿…è¯»ï¼‰
 
-¹ØÓÚ CSS3 »òÕß Bootstrap CSS¿â µÄ½Ì³Ì
+å…³äº CSS3 æˆ–è€… Bootstrap CSSåº“ çš„æ•™ç¨‹
 http://www.bootcss.com/
 http://www.w3school.com.cn/css3/index.asp
 
