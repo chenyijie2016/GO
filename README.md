@@ -1,3 +1,6 @@
+# 项目文档:http://nand2x-go.readthedocs.io
+
+
 # 目录说明
 
 ## 前端---tenuki.js
