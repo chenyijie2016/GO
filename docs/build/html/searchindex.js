@@ -1,0 +1,1 @@
+Search.setIndex({docnames:["index","todo"],envversion:53,filenames:["index.rst","todo.rst"],objects:{},objnames:{},objtypes:{},terms:{api:1,content:0,index:0,modul:0,page:0,search:0,todo:0},titles:["Welcome to nand2x\u2019s documentation!","todo"],titleterms:{document:0,indic:0,nand2x:0,tabl:0,todo:1,welcom:0}})

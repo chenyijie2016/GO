@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-# nand2go documentation build configuration file, created by
-# sphinx-quickstart on Thu May 25 16:05:42 2017.
+# nand2x documentation build configuration file, created by
+# sphinx-quickstart on Thu May 25 17:14:36 2017.
 #
 # This file is execfile()d with the current directory set to its
 # containing dir.
@@ -19,14 +19,7 @@
 #
 # import os
 # import sys
-from recommonmark.parser import CommonMarkParser
-
-source_parsers = {
-    '.md': CommonMarkParser,
-}
-
-source_suffix = ['.rst', '.md']
-
+import sphinx_rtd_theme
 # sys.path.insert(0, os.path.abspath('.'))
 
 
@@ -54,9 +47,9 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'nand2go'
-copyright = '2017, rv'
-author = 'rv'
+project = 'nand2x'
+copyright = '2017, group'
+author = 'group'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -77,7 +70,7 @@ language = None
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This patterns also effect to html_static_path and html_extra_path
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+exclude_patterns = []
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = 'sphinx'
@@ -91,7 +84,9 @@ todo_include_todos = False
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'alabaster'
+# html_theme = 'alabaster'
+html_theme = "sphinx_rtd_theme"
+html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -108,7 +103,7 @@ html_static_path = ['_static']
 # -- Options for HTMLHelp output ------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'nand2godoc'
+htmlhelp_basename = 'nand2xdoc'
 
 
 # -- Options for LaTeX output ---------------------------------------------
@@ -135,8 +130,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'nand2go.tex', 'nand2go Documentation',
-     'rv', 'manual'),
+    (master_doc, 'nand2x.tex', 'nand2x Documentation',
+     'group', 'manual'),
 ]
 
 
@@ -145,7 +140,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'nand2go', 'nand2go Documentation',
+    (master_doc, 'nand2x', 'nand2x Documentation',
      [author], 1)
 ]
 
@@ -156,8 +151,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'nand2go', 'nand2go Documentation',
-     author, 'nand2go', 'One line description of project.',
+    (master_doc, 'nand2x', 'nand2x Documentation',
+     author, 'nand2x', 'One line description of project.',
      'Miscellaneous'),
 ]
 
