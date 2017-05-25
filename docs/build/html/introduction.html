@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Welcome to nand2x’s documentation! &mdash; nand2x  documentation</title>
+  <title>Introduction &mdash; nand2x  documentation</title>
   
 
   
@@ -35,8 +35,9 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="nand2x  documentation" href="#"/>
-        <link rel="next" title="Introduction" href="introduction.html"/> 
+    <link rel="top" title="nand2x  documentation" href="index.html"/>
+        <link rel="next" title="Dependencies" href="dependencies.html"/>
+        <link rel="prev" title="Welcome to nand2x’s documentation!" href="index.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -55,7 +56,7 @@
           
 
           
-            <a href="#" class="icon icon-home"> nand2x
+            <a href="index.html" class="icon icon-home"> nand2x
           
 
           
@@ -86,11 +87,19 @@
             
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">目录说明</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#wgo-js">前端—wgo.js</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#flask">后端—flask</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mongodb">数据库部分—mongodb</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="dependencies.html">Dependencies</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
-<li class="toctree-l1"><a class="reference internal" href="todo.html">Todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="todo.html">todo</a></li>
 </ul>
 
             
@@ -105,7 +114,7 @@
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">nand2x</a>
+          <a href="index.html">nand2x</a>
         
       </nav>
 
@@ -133,15 +142,15 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="#">Docs</a> &raquo;</li>
+      <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Welcome to nand2x’s documentation!</li>
+      <li>Introduction</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/introduction.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -154,28 +163,35 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="welcome-to-nand2x-s-documentation">
-<h1>Welcome to nand2x’s documentation!<a class="headerlink" href="#welcome-to-nand2x-s-documentation" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="introduction.html#id1">目录说明</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="dependencies.html">Dependencies</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
-<li class="toctree-l1"><a class="reference internal" href="todo.html">Todo</a></li>
-</ul>
-</div>
-</div>
-<div class="section" id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2>目录说明<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="wgo-js">
+<h3>前端—wgo.js<a class="headerlink" href="#wgo-js" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
-<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
-<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
+<li>static/:返回的网页文件</li>
 </ul>
+</div>
+<div class="section" id="flask">
+<h3>后端—flask<a class="headerlink" href="#flask" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>server.py:服务端主进程,可以添加与前端对应的通信模块,信息处理在其他文件中实现</li>
+<li>gamemain.py:负责处理与对局有关的信息</li>
+<li>user.py:负责用户登录、注册、信息更新保存的方面</li>
+<li>blockchain.py:负责区块链数据处理(尚未实现)</li>
+<li>AI.py:AI接口(尚未实现)</li>
+<li>(未完待更新)</li>
+</ul>
+</div>
+<div class="section" id="mongodb">
+<h3>数据库部分—mongodb<a class="headerlink" href="#mongodb" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>user_database/:与用户有关的数据库</li>
+<li>game_database/:游戏记录数据库</li>
+</ul>
+</div>
+</div>
 </div>
 
 
@@ -188,8 +204,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="introduction.html" class="btn btn-neutral float-right" title="Introduction" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="dependencies.html" class="btn btn-neutral float-right" title="Dependencies" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
+      
+        <a href="index.html" class="btn btn-neutral" title="Welcome to nand2x’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

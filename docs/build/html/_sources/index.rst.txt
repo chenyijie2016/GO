@@ -10,6 +10,9 @@ Welcome to nand2x's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   introduction
+   dependencies
+   tutorial
    todo
 
 
