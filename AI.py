@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class AI(object):
     def __init__(self, game_message):
         self.game_id = game_message['game_id']

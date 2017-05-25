@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from flask import Flask, render_template, session, request
@@ -187,4 +188,4 @@ def modify_information(msg):
 
 
 if __name__ == '__main__':
-    socketio.run(app, host='127.0.0.1', port=8080)
+    socketio.run(app, host='0.0.0.0', port=8080)
