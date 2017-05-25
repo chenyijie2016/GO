@@ -3,7 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to nand2x's documentation!
+Nand2X 围棋网站项目说明文档
 ==================================
 
 .. toctree::
