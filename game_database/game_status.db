@@ -1,1 +1,1 @@
-[]
+[{"player_num": 2, "player1": "ttt", "game_id": "4", "player2": "ttt", "status": "fight"}, {"player_num": 2, "player1": "ttt", "game_id": "5", "player2": "jjj", "status": "fight"}, {"player1": "ttt", "player_num": 1, "game_id": "456", "status": "wait"}]

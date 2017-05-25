@@ -1,0 +1,107 @@
+<!-- 
+@Time    : 2017/5/22 23:37
+@Author  : cyj
+@Site    : 
+@File    : information
+@Software: WebStorm
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>用户信息页</title>
+	<script id="jquery_172" type="text/javascript" class="library"
+	        src="https://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+	<script type="text/javascript" src="https://cdn.bootcss.com/socket.io/1.5.1/socket.io.min.js"></script>
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<style type="text/css" rel="stylesheet">
+		.content {
+			width: 400px;
+			margin: auto;
+			text-align: center;
+			font-family: SimSun;
+		}
+	</style>
+</head>
+<body>
+<iframe name='hidden_frame' id="hidden_frame" style="display:none"></iframe>
+<div class="content well">
+	用户名:
+	<div id="user_id"></div>
+	等级:
+	<div id="rank"></div>
+	段位:
+	<div id="grade"></div>
+	胜场:
+	<div id="win"></div>
+	输场:
+	<div id="lose"></div>
+	<div>个人信息</div>
+	<form target="hidden_frame" action="#">
+		国籍:<input type="text" id="country">
+		<br>
+		个人说明:
+		<br>
+		<textarea rows="5" cols="30" wrap="physical" id="intr"></textarea>
+		<br>
+		<button value="提交更改" onclick="send()" class="btn">提交更改</button>
+		<button value="返回" onclick="window.location.href='/'" class="btn">返回</button>
+		<!--<input type="submit" id="sub" value="提交更改">-->
+	</form>
+</div>
+
+<script type="text/javascript">
+	var socket = io.connect();
+
+
+	var allcookies = document.cookie;
+	var cookies_list = allcookies.replace(" ", "").split(";");
+	socket.emit('user_information', {'user_id': get_user_id(cookies_list)});
+
+	socket.on('user_information', function (msg)
+	{
+		$('#user_id').text(msg.user_id);
+		$('#rank').text(msg.rank);
+		$('#grade').text(msg.grade);
+		$('#country').val(msg.country);
+		$('#intr').text(msg.intr);
+		$('#win').text(msg.win);
+		$('#lose').text(msg.lose);
+	});
+
+	socket.on('set_user_information_reply_ok', function (msg)
+	{
+		alert('修改信息成功');
+		window.location.reload();
+	});
+
+	function send()
+	{
+		socket.emit('set_user_information', {
+			country: $('#country').val(),
+			intr: $('#intr').val(),
+			user_id: $('#user_id').text()
+		})
+	}
+
+
+	function get_user_id(cookies)
+	{
+		var i;
+		for (i = 0; i < cookies.length; i++)
+		{
+			if (cookies[i].search('user_id') != -1)
+			{
+				var res = cookies[i].split('=')[1];
+				return res;
+			}
+		}
+	}
+
+
+</script>
+
+</body>
+</html>

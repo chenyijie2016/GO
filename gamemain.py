@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import time
 import user
@@ -38,6 +39,10 @@ def register(gameuser):
     """
     if user.register(gameuser):
         print('成功注册用户:', gameuser['user_id'])
+        # 设置默认的用户信息
+        user.set_user_information(
+            {'user_id': gameuser['user_id'], 'rank': 1000, 'grade': '18k', 'country': 'unknown', 'intr': 'none',
+             'win': 0, 'lose': 0})
         return True
     else:
         return False
@@ -88,3 +93,11 @@ def get_wait_game():
     :return: 
     """
     return gf.get_wait_game()
+
+
+def get_user_information(user_):
+    return user.get_user_information(user_)
+
+
+def modify_user_information(msg):
+    return user.modify_user_information(msg)
