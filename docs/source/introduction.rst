@@ -17,7 +17,8 @@ Introduction
 ~~~~~~~~~~~~~~
 
 * server.py:服务端主进程,可以添加与前端对应的通信模块,所有接收到的需要处理的信息都会发送到gamemain.py中进行处理
-* gamemain.py:负责处理所有信息
+* gamemain.py:负责处理分发所有信息
+* game_function.py:负责处理对局信息
 * user.py:负责用户登录、注册、信息更新保存的方面
 * blockchain.py:负责区块链数据处理(等待合并)
 * AI.py:AI接口(等待合并)
