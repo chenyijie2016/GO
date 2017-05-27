@@ -8,12 +8,27 @@ Nand2X 围棋网站项目说明文档
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: Introduction:
 
    introduction
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Dependencies:
+
    dependencies
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Tutorial:
+
    tutorial
-   todo
+
+.. toctree::
+   :maxdepth: 2
+   :caption: TODO:
+
+   15
 
 
 
