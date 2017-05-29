@@ -6,16 +6,18 @@
 # @File    : manger.py.py
 # @Software: PyCharm Community Edition
 import json
+import os
 
 USER_DATABASE_FILE = 'user_database/user_list.db'
 DATABASE_FILE = 'game_database/game_status.db'
-
+USER_INFO_DATABASE = 'user_database/user_info.db'
 
 def main():
     print('输入选项进行操作:')
     print('[1]:清空所有数据')
     print('[2]:显示已注册用户')
     print('[3]:显示对局信息')
+    print('[4]:清除所有对局信息')
     option = input()
     if option == '1':
         clear_all()
@@ -23,6 +25,9 @@ def main():
         showDataBase()
     if option == '3':
         showGameDataBase()
+    if option =='4':
+        clearGameStatus()
+
     print('-----------------')
     main()
 
@@ -36,6 +41,10 @@ def clear_all():
         f = open(DATABASE_FILE, 'w')
         f.write('[]')
         f.close()
+        f = open(USER_INFO_DATABASE, 'w')
+        f.write('[]')
+        f.close()
+        os.system('del game_database\sgf\*.sgf')
         print('清除数据库成功')
 
 
@@ -60,6 +69,12 @@ def showGameDataBase():
         print('创建者: ', game['player1'], end=' ')
         print('游戏人数: ', game['player_num'])
 
+
+def clearGameStatus():
+    f = open(DATABASE_FILE, 'w')
+    f.write('[]')
+    f.close()
+    print('清除数据库成功')
 
 if __name__ == '__main__':
     main()

@@ -3,6 +3,7 @@
 import time
 import user
 import game_function as gf
+import AI
 
 SGF_FILE_PATH = 'game_database/sgf/'
 
@@ -93,6 +94,26 @@ def get_wait_game():
     :return: 
     """
     return gf.get_wait_game()
+
+
+def ai_game(msg):
+    """
+    处理AI对局信息
+    msg中的method属性：
+        create:创建对局
+        play:进行对战
+    :param msg: 
+    """
+    if msg['method'] == 'create':
+        if gf.is_exist_game(msg):
+            return {'operate': 'fail'}
+        else:
+            create_sgf({'game_id': msg['game_id'], 'player1': msg['user_id'], 'player2': 'MuGo'})
+            AI.create_ai_game(msg)
+            return {'operate': 'success'}
+
+    if msg['method'] == 'play':
+        return AI.play_ai_game(msg)
 
 
 def get_user_information(user_):

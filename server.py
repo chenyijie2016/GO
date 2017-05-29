@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#!/usr/bin/env python
+# !/usr/bin/env python
 # -*- coding: utf-8 -*-
 from flask import Flask, render_template, session, request
 from flask_socketio import SocketIO, emit
@@ -167,8 +167,23 @@ def login(msg):
 
 @socketio.on('AI_event')
 def AI_message(msg):
+    """
+    处理AI对局信息
+    :param msg: 
+    """
+    if DEBUG:
+        print('收到AI对局信息', msg)
+    result = gamemain.ai_game(msg)
     if msg['method'] == 'create':
-        pass
+        if result['operate'] == 'success':
+            emit('ai_game_start', {})
+        else:
+            emit('start_error', msg)
+
+    if msg['method'] == 'play':
+        if DEBUG:
+            print ('发送AI落子信息', result)
+        emit('ai_game_client', result)
 
 
 @socketio.on('user_information')

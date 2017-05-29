@@ -22,8 +22,8 @@
 		}
 		.user_information{
 			position: absolute;
-			right: 0px;
-			top:0px;
+			right: 0;
+			top:0;
 			color: black;
 			font-family: 微软雅黑;
 		}
@@ -49,6 +49,14 @@
 		function mouseout()
 		{
 			document.getElementById("haha").src = "{{ url_for("static",filename = "img/Group.png")}}"
+		}
+		function mouseOver2()
+		{
+			document.getElementById("haha2").src = "{{ url_for("static",filename = "img/GroupBlack.png")}}"
+		}
+		function mouseout2()
+		{
+			document.getElementById("haha2").src = "{{ url_for("static",filename = "img/Group.png")}}"
 		}
 	</script>
 
@@ -92,10 +100,18 @@
 				<!--<img src="Rectangle 2.png" class="rec1">
 				<img src="Rectangle 2.png" class="rec2">-->
 				<br>
+				开始玩家对战
 				<a href="javascript:" onclick="submit_id()">
 					<img src="{{url_for("static",filename="img/Group.png")}}"
 					width="36" height="36" id="haha" onmouseover="mouseOver()" onmouseout="mouseout()"
 					style="float:inherit;margin-left: 18px;margin-top: 10px"></a>
+
+				开始人机对战
+				<a href="javascript:" onclick="begin_ai_game()">
+					<img src="{{url_for("static",filename="img/Group.png")}}"
+					width="36" height="36" id="haha2" onmouseover="mouseOver2()" onmouseout="mouseout2()"
+					style="float:inherit;margin-left: 18px;margin-top: 10px"></a>
+
 				<!--<input type="submit" value="创建或加入游戏" class="bt1" style="background-color:transparent;background-image:url("Group.png");"  width="45" height="45" alt="" >-->
 			</form>
 		</div>
@@ -154,9 +170,9 @@
 	var boardElement = document.querySelector(".tenuki-board");
 	var game = new tenuki.Game(boardElement);
 	game.setup();
+	var AI_mode = false;
 
-
-	var string = 'abcdefghijklmnoprstuvwxyz';
+	var string = 'abcdefghijklmnopqrstuvwxyz';
 	var game_started = 0;
 	var side_me; // 记录我方黑白棋状态
 	var now_side; //设置当前下棋的一方
@@ -190,6 +206,8 @@
 				game.undo();
 				return;
 			}
+
+
             //如果游戏还没有开始，此时落子后自动undo
 			if (DEBUG)
 			{
@@ -244,8 +262,13 @@
 				msg='W';
 			}
 			msg += '[' +string[y] + string[x] + ']';
+			if(AI_mode && game.currentState().color == 'black')//防止重复发送,以后要修改
+			{
+				play_chess_ai(msg);
+				return;
+			}
 
-			sendmsg(msg);
+			play_chess_human(msg);
 
 		}
 	};
@@ -284,7 +307,7 @@
 
 
 
-
+	//登出
 	function logout()
 	{
 		document.cookie="user_id=;";
@@ -293,7 +316,7 @@
 		alert('logout');
 	}
 	
-
+	//检查是否已经登录
 	function check_login(cookie)
 	{
 
@@ -303,6 +326,7 @@
 		}
 		return false;
 	}
+	//从cookie获取用户ID
 	function get_user_id(cookies)
 	{
 		var i;
@@ -315,6 +339,7 @@
 			}
 		}
 	}
+	//检查cookies
 	function checkcookies(allcookies)
 	{
 
@@ -396,6 +421,8 @@
 			}
 		}
 	);
+
+	//开始游戏错误信息
 	socket.on('start_error', function (msg)
 	{
 		if (DEBUG)
@@ -407,6 +434,8 @@
 			alert('加入游戏失败,该游戏ID已被使用');
 		}
 	});
+
+	//人人对战收到的落子信息
 	socket.on('play_game_client', function (msg)
 		{
 			//alert('接受到信息');
@@ -450,6 +479,7 @@
 			}
 		}
 	);
+
 	socket.on('game_info', function (msg)
 	{
 		if (DEBUG)
@@ -472,10 +502,37 @@
 			}
 		}
 	});
+	//与AI对战的游戏开始事件
+	socket.on('ai_game_start', function (msg)
+	{
+		game_started = 1;
+		AI_mode = true;
+		$('#gameinfo').text($('#user_id').val()+'(黑)与MuGo(白)的对局');
+		alert('对局开始');
+	});
 
-	//发送落子消息
+	//接受AI落子信息
+	socket.on('ai_game_client', function (msg)
+	{
 
-	function sendmsg(msg)
+		var place = msg.msg;
+		var letter_x = place.charAt(2);
+		var letter_y = place.charAt(3);
+		var n_x = string.indexOf(letter_x);
+		var n_y = string.indexOf(letter_y);
+		if(DEBUG)
+		{
+			console.log('AI落子信息', msg);
+			console.log(n_x, ' ', n_y);
+		}
+		game.playAt(n_x,n_y);
+		setsystemmessage('敌方落子:[' + letter_x + ',' + letter_y + ']\n现在轮到我方落子');
+
+	});
+
+	//发送落子消息(用户间对战)
+
+	function play_chess_human(msg)
 	{
 		if (DEBUG)
 		{
@@ -483,7 +540,17 @@
 		}
 		socket.emit('play_game_server', {user_id: $('#user_id').val(), game_id: $('#game_id').val(), msg: msg})
 	}
+	//发送人机对战落子信息
+	function play_chess_ai(msg)
+	{
+		if(DEBUG)
+		{
+			console.log('发送人机对战消息');
+		}
+		socket.emit('AI_event', {user_id: $('#user_id').val(), game_id: $('#game_id').val(), msg: msg, method: 'play'});
+	}
 
+	//获取对局信息
 	function get_game_info()
 	{
 		socket.emit('get_wait_game', {});
@@ -507,6 +574,29 @@
 			socket.emit('game_start', {user_id: $('#user_id').val(), game_id: $('#game_id').val()});
 		}
 	}
+
+	function begin_ai_game()
+	{
+		if($('#user_id').val() == '')
+		{
+			alert('您还尚未登录,请登录后再操作!');
+			return
+		}
+
+		if ($('#game_id').val() == '')
+		{
+			alert('必须输入游戏id');
+		}
+		else
+		{
+			console.log($('#user_id').val() + $('#game_id').val());
+			socket.emit('AI_event', {user_id: $('#user_id').val(), game_id: $('#game_id').val(), method: 'create'});
+		}
+
+
+	}
+
+
 	//发送对话消息
 	$('form#sendmessage').submit(
 		function submit_message()
@@ -525,12 +615,14 @@
 			}
 		}
 	);
+
 	//显示收到的消息，可以用更美观的方式实现
 	//TODO
 	function setmessage(msg)
 	{
 		$('div#gamemessage').append('<br>' + $('<div/>').text(msg).html());
 	}
+	//设置系统消息
 	function setsystemmessage(msg)
 	{
 		$('div#system_message').text(msg);
