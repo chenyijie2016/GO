@@ -36,6 +36,17 @@
 		div div a:hover{
 			color: black;
 		}
+		.control
+		{
+			position: fixed;
+			left: 100px;
+			top: 600px;
+			width: 300px;
+			height: 100px;
+			font-family: SimSun;
+			font-size: 15px;
+			color: black;
+		}
 	</style>
 	<link href="{{url_for("static", filename="css/stylesheet.css")}}" rel="stylesheet" type="text/css">
 	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -124,6 +135,13 @@
 			<div id="gamemessage">
 
 			</div>
+
+
+			<form id="sendmessage" target="rfFrame" style="color: black; font-family: SimSun; font-size: 15px;">
+				<input type="text" name="game_message" id="game_message" size="15" placeholder="输入要发送的消息">
+				<input type="submit" value="发送消息" style="color: black;">
+			</form>
+
 		</div>
 		<!-- TODO 显示系统消息-->
 		<div class="systemmessage">
@@ -135,6 +153,14 @@
 
 			</div>
 		</div>
+
+		<div class="control">
+			<button class="btn" onclick="send_pass()">PASS</button>
+			<button class="btn" onclick="send_undo()">悔棋</button>
+			<button class="btn" onclick="send_tie()">求和</button>
+			<button class="btn" onclick="send_fail()">认输</button>
+
+		</div>
 		<iframe id="rfFrame" name="rfFrame" src="about:blank" style="display:none;"></iframe>
 
 
@@ -143,13 +169,7 @@
 
 
 
-		<div>
 
-			<form id="sendmessage" target="rfFrame">
-				<input type="text" name="game_message" id="game_message">
-				<input type="submit" value="发送消息">
-			</form>
-		</div>
 
 	</div>
 
@@ -198,7 +218,7 @@
         }
 
         // illegal click
-        if (!game_ready || side_me != side_now)
+        if (!game_ready || side_me != side_now && !AI_mode)//AI模式下此功能有bug，临时解决之
         {
             have_undoed = true;
             game.undo();
@@ -235,7 +255,15 @@
                 }
                 msg += '[' +string[y] + string[x] + ']';
 
-                play_chess_human(msg);
+                if(!AI_mode)
+                {
+	                play_chess_human(msg);
+                }
+                else
+                {
+                	play_chess_ai(msg);
+                }
+
                 setsystemmessage('');
                 return;
 			}
@@ -437,14 +465,17 @@
 			}
 		}
 	});
+
 	//与AI对战的游戏开始事件
 	socket.on('ai_game_start', function (msg)
 	{
 		game_started = 1;
 		AI_mode = true;
+		game_ready = true;
 		$('#gameinfo').text($('#user_id').val()+'(黑)与MuGo(白)的对局');
 		alert('对局开始');
 	});
+
 
 	//接受AI落子信息
 	socket.on('ai_game_client', function (msg)
@@ -460,6 +491,7 @@
 			console.log('AI落子信息', msg);
 			console.log(n_x, ' ', n_y);
 		}
+		peer_play = true;
 		game.playAt(n_x,n_y);
 		setsystemmessage('敌方落子:[' + letter_x + ',' + letter_y + ']\n现在轮到我方落子');
 
