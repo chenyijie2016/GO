@@ -165,35 +165,45 @@
 
 <script>
 	var DEBUG = true;
-	var only_one_undo = true;
-	var canplace = false;
-	var boardElement = document.querySelector(".tenuki-board");
-	var game = new tenuki.Game(boardElement);
-	game.setup();
-	var AI_mode = false;
-
 	var string = 'abcdefghijklmnopqrstuvwxyz';
-	var game_started = 0;
 	var side_me; // 记录我方黑白棋状态
-	var now_side; //设置当前下棋的一方
-
 	var side_now; //设置当前下棋的一方
 	var game_ready = false;
 	var peer_play = false;
 	var have_undoed = false;
+	var AI_mode = false;
 
+	var boardElement = document.querySelector(".tenuki-board");
+	var game = new tenuki.Game(boardElement);
+	game.setup();
     //每一次棋盘重绘之后都会执行下面的回调函数
     //即每次playAt后会执行
     //注意，每次悔棋(undo)也会执行下面的函数！！！！！
 	game.callbacks.postRender = function(game) {
 
-		console.log(game.currentState())
         //game.currentState() -- 游戏当前状态
+	    if (DEBUG) {
+            console.log(game.currentState())
+		}
 
 		if (game.currentState().pass)
 		{
 			console.log(game.currentState().color + " passed");
 		}
+
+        if (have_undoed)
+        {
+            have_undoed = false;
+            return;
+        }
+
+        // illegal click
+        if (!game_ready || side_me != side_now)
+        {
+            have_undoed = true;
+            game.undo();
+            return;
+        }
 
 		if (game.currentState().playedPoint)
 		{
@@ -207,121 +217,36 @@
 			var x = game.currentState().playedPoint.x;
 			var y = game.currentState().playedPoint.y;
 
-
-
-			if (have_undoed)
-			{
-				have_undoed = false;
-				return;
-			}
-			        // illegal click
-			if (!game_ready || side_me != side_now)
-			{
-				have_undoed = true;
-				game.undo();
-				return;
-			}
-
-
-            //如果游戏还没有开始，此时落子后自动undo
-			if (DEBUG)
-			{
-				console.log('能否落子(校验前):' + canplace);
-			}
-            //TODO 添加检验代码使得在非法情况下的落子可以被忽略
             
-            //一个推荐的方法是使用undo
-            
-            //比较麻烦的原因是无论哪方落子都会触发该函数，并且该函数无法分辨落子
-            //是由点击棋盘还是使用内置函数产生的
-            //但是使用undo后也会触发该函数，需要额外的判断
-            //
+            //my own play
+			if (!peer_play)
+			{
+                var msg;
 
-			/*if(canplace == false && only_one_undo)
-			{
-				//only_one_undo = false;
-				console.log('当前不可落子');
-				game.undo();
-				return;
-			}*/
-            /*
-			if(game.currentState().color != side_me)
-			{
-				if(canplace == false)
-				{
-					game.undo()
-					return;
-				}
+                if (side_me == 'black')
+                {
+                    msg='B';
+                    side_now = 'white';
+                }
+                else
+                {
+                    msg='W';
+                    side_now = 'black';
+                }
+                msg += '[' +string[y] + string[x] + ']';
+
+                play_chess_human(msg);
+                setsystemmessage('');
+                return;
 			}
+			//peer played, so set false
 			else
 			{
-				canplace = false;
-			}
-
-			if (DEBUG)
-			{
-				console.log('能否落子(校验后):' + canplace);
-			}
-            */
-            
-            
-            //下面是发送落子消息到服务端
-			var msg;
-
-			if (side_me == 'black')
-			{
-				msg='B';
-			}
-			else
-			{
-				msg='W';
-			}
-			msg += '[' +string[y] + string[x] + ']';
-			if(AI_mode && game.currentState().color == 'black')//防止重复发送,以后要修改
-			{
-				play_chess_ai(msg);
-				return;
-			}
-
-			play_chess_human(msg);
-			peer_play = false;
+			    peer_play = false;
+            }
 
 		}
 	};
-/*
-	function start_go(side)
-	{
-		game.setup({
-			player: side,
-			gameOptions: {
-				boardSize: 19
-			},
-			hooks: {
-				submitPlay: function(playedY, playedX, result) {
-					if (side_me == 'black')
-					{
-						sendmsg('B[' + string[playedY] + string[playedX] + ']');
-					}
-					else
-					{
-						sendmsg('W[' + string[playedY] + string[playedX] + ']');
-					}
-					game._game.playAt(playedY, playedX);
-				},
-
-				submitMarkDeadAt: function(y, x, stones, result) {
-
-				},
-
-				submitPass: function(result) {
-
-				}
-			}
-		});;
-	}
-*/
-
-
 
 	//登出
 	function logout()
@@ -415,27 +340,16 @@
 				alert('另一个用户成功连接,游戏开始!');
 				$('#gameinfo').text($('#user_id').val() + '(黑)和' + msg.user_id + '(白)的对决');
 				$('div#player_side').text('你执黑棋');
-				game_started = 1;
-				now_side='black';
 				game_ready = true;
 				side_now='black';
 				side_me = 'black';
-
-				canplace = true;
-				//start_go('black');
-				//game.setSide('black');
 			}
 			if (msg.game_id == $('#game_id').val() && msg.user_id == $('#user_id').val() && msg.begin == 1)
 			{
 				alert('成功连接游戏,游戏开始!');
 				$('#gameinfo').text(msg.emeny + '(黑)和' + $('#user_id').val() + '(白)的对决');
 				side_me = 'white';
-				now_side = 'black';
 				side_now = 'black';
-				//start_go('white');
-				game_started = 1;
-				//game.setSide('white');
-				canplace = false;
 				game_ready = true;
 				$('div#player_side').text('你执白棋');
 
@@ -476,12 +390,6 @@
 					console.log(msg)
 				}
 
-				game.playAt(n_x,n_y);
-				canplace = true;
-				//game.receivePlay(n_x,n_y);
-
-				setsystemmessage('敌方落子:[' + letter_x + ',' + letter_y + ']\n现在轮到我方落子');
-
 				if (place.charAt(0) == 'B')
 				{
 					side_now = "white";
@@ -495,7 +403,13 @@
 					console.log('改变当前势力');
 					console.log(side_now);
 				}
+                if (side_me == side_now)
+				{
+                    setsystemmessage('敌方落子:[' + letter_x + ',' + letter_y + ']\n现在轮到我方落子');
+				}
+
 				peer_play = true;
+				game.playAt(n_x,n_y);
 
 			}
 		}
