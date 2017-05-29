@@ -436,8 +436,17 @@
                     setsystemmessage('敌方落子:[' + letter_x + ',' + letter_y + ']\n现在轮到我方落子');
 				}
 
-				peer_play = true;
-				game.playAt(n_x,n_y);
+
+				if (n_x == 19 && n_y == 19)
+				{
+					game.pass();
+					setsystemmessage('敌方放弃落子\n现在轮到我方落子')
+				}
+				else
+				{
+					peer_play = true;
+					game.playAt(n_x, n_y);
+				}
 
 			}
 		}
@@ -496,6 +505,38 @@
 		setsystemmessage('敌方落子:[' + letter_x + ',' + letter_y + ']\n现在轮到我方落子');
 
 	});
+	//发送弃权信息
+	function send_pass()
+	{
+		setsystemmessage('PASS');
+		if (side_me == 'black')
+		{
+			if(AI_mode)
+			{
+				play_chess_ai('B[tt]');
+			}
+			else
+			{
+				play_chess_human('B[tt]');
+			}
+		}
+		else
+		{
+			if(AI_mode)
+			{
+				play_chess_ai('W[tt]');
+			}
+			else
+			{
+				play_chess_human('W[tt]');
+			}
+		}
+
+		game.pass()
+
+	}
+
+
 
 	//发送落子消息(用户间对战)
 
