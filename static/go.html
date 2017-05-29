@@ -176,7 +176,12 @@
 	var game_started = 0;
 	var side_me; // 记录我方黑白棋状态
 	var now_side; //设置当前下棋的一方
-    
+
+	var side_now; //设置当前下棋的一方
+	var game_ready = false;
+	var peer_play = false;
+	var have_undoed = false;
+
     //每一次棋盘重绘之后都会执行下面的回调函数
     //即每次playAt后会执行
     //注意，每次悔棋(undo)也会执行下面的函数！！！！！
@@ -185,11 +190,13 @@
 		console.log(game.currentState())
         //game.currentState() -- 游戏当前状态
 
-		if (game.currentState().pass) {
+		if (game.currentState().pass)
+		{
 			console.log(game.currentState().color + " passed");
 		}
 
-		if (game.currentState().playedPoint) {
+		if (game.currentState().playedPoint)
+		{
 
 			console.log(game.currentState().color + " played " + game.currentState().playedPoint.y + "," + game.currentState().playedPoint.x);
             /*
@@ -201,8 +208,16 @@
 			var y = game.currentState().playedPoint.y;
 
 
-			if (game_started == 0)
+
+			if (have_undoed)
 			{
+				have_undoed = false;
+				return;
+			}
+			        // illegal click
+			if (!game_ready || side_me != side_now)
+			{
+				have_undoed = true;
 				game.undo();
 				return;
 			}
@@ -269,6 +284,7 @@
 			}
 
 			play_chess_human(msg);
+			peer_play = false;
 
 		}
 	};
@@ -391,6 +407,7 @@
 				alert('成功创建游戏，ID为:' + msg.game_id);
 				side_me = msg.side;
 				game_started = 0;
+				game_ready = false;
 
 			}
 			if (msg.game_id == $('#game_id').val() && msg.user_id != $('#user_id').val() && msg.begin == 1)
@@ -400,6 +417,8 @@
 				$('div#player_side').text('你执黑棋');
 				game_started = 1;
 				now_side='black';
+				game_ready = true;
+				side_now='black';
 				side_me = 'black';
 
 				canplace = true;
@@ -412,10 +431,12 @@
 				$('#gameinfo').text(msg.emeny + '(黑)和' + $('#user_id').val() + '(白)的对决');
 				side_me = 'white';
 				now_side = 'black';
+				side_now = 'black';
 				//start_go('white');
 				game_started = 1;
 				//game.setSide('white');
 				canplace = false;
+				game_ready = true;
 				$('div#player_side').text('你执白棋');
 
 			}
@@ -463,18 +484,18 @@
 
 				if (place.charAt(0) == 'B')
 				{
-					now_side = "white";
+					side_now = "white";
 				}
 				else
 				{
-					now_side = "black";
+					side_now = "black";
 				}
 				if(DEBUG)
 				{
 					console.log('改变当前势力');
-					console.log(now_side);
+					console.log(side_now);
 				}
-
+				peer_play = true;
 
 			}
 		}
