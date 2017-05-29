@@ -30,6 +30,11 @@ Nand2X 围棋网站项目说明文档
 
    15
 
+.. toctree::
+   :maxdepth: 2
+   :caption: BUG:
+   
+   bug
 
 
 Indices and tables
