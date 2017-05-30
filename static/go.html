@@ -38,14 +38,14 @@
 		}
 		.control
 		{
-			position: fixed;
-			left: 100px;
-			top: 600px;
 			width: 300px;
 			height: 100px;
 			font-family: SimSun;
 			font-size: 15px;
 			color: black;
+			text-align: center;
+			margin: 10px auto;
+
 		}
 	</style>
 	<link href="{{url_for("static", filename="css/stylesheet.css")}}" rel="stylesheet" type="text/css">
@@ -154,6 +154,12 @@
 			</div>
 		</div>
 
+
+		<iframe id="rfFrame" name="rfFrame" src="about:blank" style="display:none;"></iframe>
+
+
+
+		<div class="tenuki-board tenuki-board-textured" style="align-content: center;margin: auto"></div>
 		<div class="control">
 			<button class="btn" onclick="send_pass()">PASS</button>
 			<button class="btn" onclick="send_undo()">悔棋</button>
@@ -161,12 +167,6 @@
 			<button class="btn" onclick="send_fail()">认输</button>
 
 		</div>
-		<iframe id="rfFrame" name="rfFrame" src="about:blank" style="display:none;"></iframe>
-
-
-
-		<div class="tenuki-board tenuki-board-textured" style="align-content: center;margin: auto"></div>
-
 
 
 
@@ -508,32 +508,34 @@
 	//发送弃权信息
 	function send_pass()
 	{
-		setsystemmessage('PASS');
-		if (side_me == 'black')
+		if(game_ready)
 		{
-			if(AI_mode)
+			setsystemmessage('PASS');
+			if (side_me == 'black')
 			{
-				play_chess_ai('B[tt]');
+				if (AI_mode)
+				{
+					play_chess_ai('B[tt]');
+				}
+				else
+				{
+					play_chess_human('B[tt]');
+				}
 			}
 			else
 			{
-				play_chess_human('B[tt]');
+				if (AI_mode)
+				{
+					play_chess_ai('W[tt]');
+				}
+				else
+				{
+					play_chess_human('W[tt]');
+				}
 			}
-		}
-		else
-		{
-			if(AI_mode)
-			{
-				play_chess_ai('W[tt]');
-			}
-			else
-			{
-				play_chess_human('W[tt]');
-			}
-		}
 
-		game.pass()
-
+			game.pass()
+		}
 	}
 
 
