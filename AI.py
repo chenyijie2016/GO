@@ -22,8 +22,9 @@ def create_ai_game(msg):
 
 def play_ai_game(msg):
     write_record(msg)
-    write_record(simpleAI.AI(msg))
-    return {'game_id': msg['game_id'], 'msg': simpleAI.AI(msg)['msg'], 'user_id': 'MuGo'}
+    result = simpleAI.AI(msg)
+    write_record(result)
+    return {'game_id': msg['game_id'], 'msg': result['msg'], 'user_id': 'MuGo'}
 
 
 def write_record(game):

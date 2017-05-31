@@ -242,6 +242,10 @@
 			if (!peer_play)
 			{
                 var msg;
+                if(DEBUG)
+                {
+	                console.log('我方势力',side_me);
+                }
 
                 if (side_me == 'black')
                 {
@@ -481,6 +485,7 @@
 		game_started = 1;
 		AI_mode = true;
 		game_ready = true;
+		side_me = 'black';
 		$('#gameinfo').text($('#user_id').val()+'(黑)与MuGo(白)的对局');
 		alert('对局开始');
 	});
