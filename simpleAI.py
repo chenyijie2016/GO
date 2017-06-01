@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import argparse
 import argh
-import sys
 import os
+import sys
 import gtp as gtp_lib
 
 from policy import PolicyNetwork
@@ -12,22 +12,18 @@ from load_data_sets import DataSet, parse_data_sets
 string = 'abcdefghijklmnopqrstuvwxyz'
 read_file = "D:\go\savedmodel"
 data_file = "data.txt"
-data_file_path = r'game_database/data/'
+
+data_file_path = 'game_database/data/'
 
 
 def AI(msg):
-    global read_file
-    data_file = data_file_path + msg['game_id'] + '.txt'
-    # 提取信息
-    x = msg['msg'][2].upper()
-    y = string.index(msg['msg'][3])
-    color = ''
-    if msg['msg'][0] == 'B':
-        color = 'W'
-    else:
-        color = 'B'
+    global read_file  # 提取信息
 
-        # 初始化策略网络
+    data_file = data_file_path + msg['game_id']
+    x, y, color = parse_input_msg(msg)
+    print(x, y, color)
+
+    # 初始化策略网络
     n = PolicyNetwork(use_cpu=True)
     instance = PolicyNetworkBestMovePlayer(n, read_file)
     gtp_engine = gtp_lib.Engine(instance)
@@ -43,26 +39,31 @@ def AI(msg):
             if cmd == '':
                 continue
             gtp_engine.send(cmd)
-        # sys.stdout.write(cmd)
+        # sys.stdout.write(cmd + '\n')
         # sys.stdout.flush()
         rfile.close()
 
     # 解析对方下棋指令，写进data
     wfile = open(data_file, 'a')
-    player_cmd = parse_player_input(msg['msg'][0], x, y)
-    wfile.write(player_cmd + '\n')
-    gtp_engine.send(player_cmd)
+    if msg['msg'][2].lower() == 't' and msg['msg'][3].lower() == 't':
+        pass
+    else:
+        player_cmd = parse_player_input(msg['msg'][0], x, y)
+        wfile.write(player_cmd + '\n')
+        gtp_engine.send(player_cmd)
     # sys.stdout.write(player_cmd + '\n')
     # sys.stdout.flush()
 
     gtp_reply = gtp_engine.send(AI_cmd)
     gtp_cmd = parse_AI_input(color, gtp_reply)
-    wfile.write(gtp_cmd + '\n')
+    wfile.write(gtp_cmd)
     wfile.close()
-    # sys.stdout.write(gtp_reply)
+    # sys.stdout.write(gtp_reply + '\n')
     # sys.stdout.flush()
 
-    response = color + '[' + gtp_reply[2].lower() + string[int(gtp_reply[3:])] + ']'
+    AI_x, AI_y = parse_AI_reply(gtp_reply)
+
+    response = color + '[' + AI_x + AI_y + ']'
     # sys.stdout.write(response)
     # sys.stdout.flush()
 
@@ -78,8 +79,41 @@ def parse_AI_input(color, gtp_reply):
 
 
 def parse_player_input(color, x, y):
-    return "play " + color.upper() + ' ' + str(x).upper() + str(y)
+    return "play " + color.upper() + ' ' + x.upper() + str(y)
 
 
-if __name__ == "__main__":
-    AI({'game_id': 123, 'msg': 'B[ab]'})
+def parse_input_msg(msg):
+    global string
+
+    # get the letters of position
+    x = msg['msg'][2]
+    y = string.index(msg['msg'][3])
+    color = ''
+
+    # decide color
+    if msg['msg'][0] == 'B':
+        color = 'W'
+    else:
+        color = 'B'
+
+    # deal with the first of location that larger than 'i'
+    if x >= 'i':
+        x = string[string.index(x) + 1]
+
+    # deal with the opposite allocation of vertical axis
+    y = 19 - y
+
+    return x, y, color
+
+
+def parse_AI_reply(gtp_reply):
+    AI_x = gtp_reply[2].lower()
+    AI_y = int(gtp_reply[3:])
+
+    if AI_x > 'i':
+        AI_x = string[string.index(AI_x) - 1]
+
+    AI_y = 19 - AI_y
+    AI_y = string[AI_y]
+
+    return AI_x, AI_y

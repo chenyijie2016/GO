@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # !/usr/bin/env python
 # -*- coding: utf-8 -*-
 from flask import Flask, render_template, session, request
@@ -18,7 +17,7 @@ DEBUG = True
 @app.route('/')
 def index():
     if DEBUG:
-        print('访问')
+        print('connect')
     # 返回网站主页
     return render_template('static/go.html')
 
@@ -26,14 +25,14 @@ def index():
 @app.route('/register')
 def register_html():
     if DEBUG:
-        print('注册')
+        print('register')
     return render_template('static/register.html')
 
 
 @app.route('/login')
 def login_html():
     if DEBUG:
-        print('登录')
+        print('login')
     return render_template('static/login.html')
 
 
@@ -61,7 +60,7 @@ def client_msg(msg):
 @socketio.on('connect_event')
 def connected_msg(msg):
     if DEBUG:
-        print('连接')
+        print('**')
     emit('server_response', {'data': msg['data']})
 
 
@@ -72,7 +71,7 @@ def game_start_msg(msg):
     :param msg: 
     """
     if DEBUG:
-        print('接受到游戏创建/加入请求:', msg)
+        print('request for game start', msg)
 
     result = gamemain.deal_game_start(msg)
 
@@ -80,18 +79,18 @@ def game_start_msg(msg):
         emit('game_start', {'game_id': msg['game_id'], 'user_id': msg['user_id'], 'begin': '0', 'side': 'black'},
              broadcast=True)
         if DEBUG:
-            print('创建游戏成功')
+            print('create game OK')
 
     if result['operate'] == 'join':
         emit('game_start', {'user_id': msg['user_id'], 'game_id': msg['game_id'], 'begin': '1', 'side': 'white',
                             'emeny': gamemain.get_game(msg)['player1']}, broadcast=True)
         if DEBUG:
-            print('加入游戏成功')
+            print('join game OK')
 
     if result['operate'] == 'none':
         emit('start_error', {'game_id': msg['game_id']})
         if DEBUG:
-            print('加入游戏失败')
+            print('join game ERROR')
 
 
 @socketio.on('play_game_server')
@@ -101,7 +100,7 @@ def play_game_msg(msg):
     :param msg: 
     """
     if DEBUG:
-        print('落子信息:', msg)
+        print('play info:', msg)
     # 记录到sgf文件中
     gamemain.write_record(msg)
     # 向其他连接的客户端广播
@@ -116,14 +115,14 @@ def message(msg):
     :param msg: 
     """
     if DEBUG:
-        print('用户聊天信息:', msg)
+        print('message:', msg)
     emit('message', msg, broadcast=True)
 
 
 @socketio.on('get_wait_game')
 def send_wait_game(msg):
     if DEBUG:
-        print('发送处于等待状态的游戏列表')
+        print('sending waiting game')
     emit('game_info', {'data': gamemain.get_wait_game()})
 
 
@@ -134,15 +133,15 @@ def register(msg):
     :param msg: 
     """
     if DEBUG:
-        print('收到注册请求', msg)
+        print('request for register', msg)
     if gamemain.register(msg):
         emit('register_reply', {'data': 'success'})
         if DEBUG:
-            print('注册成功')
+            print('register OK')
     else:
         emit('register_reply', {'data': 'failed'})
         if DEBUG:
-            print('注册失败')
+            print('register ERROR')
 
 
 @socketio.on('login')
@@ -152,17 +151,17 @@ def login(msg):
     :param msg: 
     """
     if DEBUG:
-        print('收到登录请求', msg)
+        print('request for login', msg)
 
     if gamemain.login(msg):
         emit('login_reply', {'data': 'success'})
         if DEBUG:
-            print('登录成功')
+            print('login OK')
 
     else:
         emit('login_reply', {'data': 'failed'})
         if DEBUG:
-            print('登录失败')
+            print('login ERROR')
 
 
 @socketio.on('AI_event')
@@ -172,7 +171,7 @@ def AI_message(msg):
     :param msg: 
     """
     if DEBUG:
-        print('收到AI对局信息', msg)
+        print('receive AI message', msg)
     result = gamemain.ai_game(msg)
     if msg['method'] == 'create':
         if result['operate'] == 'success':
@@ -182,21 +181,21 @@ def AI_message(msg):
 
     if msg['method'] == 'play':
         if DEBUG:
-            print ('发送AI落子信息', result)
+            print ('sending AI message', result)
         emit('ai_game_client', result)
 
 
 @socketio.on('user_information')
 def send_information(msg):
     if DEBUG:
-        print('获取用户信息')
+        print('get user information')
     emit('user_information', gamemain.get_user_information(msg))
 
 
 @socketio.on('set_user_information')
 def modify_information(msg):
     if DEBUG:
-        print('修改用户信息', msg)
+        print('set user information', msg)
 
     gamemain.modify_user_information(msg)
     emit('set_user_information_reply_ok', {})
