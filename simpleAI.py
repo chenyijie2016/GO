@@ -10,10 +10,10 @@ from strategies import RandomPlayer, PolicyNetworkBestMovePlayer, PolicyNetworkR
 from load_data_sets import DataSet, parse_data_sets
 
 string = 'abcdefghijklmnopqrstuvwxyz'
-read_file = "D:\go\savedmodel"
-data_file = "data.txt"
+read_file = "./AI_FILE/savedmodel"
+data_file = "yyf.sgf"
 
-data_file_path = 'game_database/data/'
+data_file_path = 'game_database/sgf/'
 
 
 def AI(msg):

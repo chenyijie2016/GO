@@ -1,0 +1,7 @@
+;SZ[19]
+FF[3]
+PB[1234567]
+PW[MuGo]
+DT[2017-06-01 19:19:17]
+EV[棋局ID qwe]
+;B[dc];W[ce];B[pq];W[cc];B[dd];W[cd];B[de];W[cf];B[df];W[cg];B[dg];W[ch];B[dh];W[ci];B[di];W[cj];B[dj];W[ck];B[dk];W[cl];B[dl];W[cm];B[dm];W[cn];B[dn];W[co];B[do];W[cp];B[dp];W[cq];B[dq];W[cr];B[dr];W[cs];B[ds];W[fq];B[fp];W[gp];B[go];W[hp];B[ho];W[ip];B[io];W[jp];B[jo];W[kp];B[ko];W[lp];B[mo];W[lo];B[ln];W[mp];B[no];W[np];B[oo];W[op];B[pp];W[oq];B[pr];W[or];B[ps];W[po];B[qo];W[pn];B[pm];W[qn];B[qm];W[rn];B[rm];W[ro];B[qp];W[rp];B[rq];W[sq];B[sr];W[sp];B[on];W[sn];B[sm];W[qd];B[so];W[qf];B[pf];W[qg];B[pg];W[qh];B[ph];W[qi];B[pi];W[qj];B[pj];W[qk];B[pk];W[rk];B[pl];W[ri];B[pe];W[pd];B[od];W[oc];B[nc];W[nd];B[md];W[ne];B[me];W[oe];B[nf];W[of];B[og];W[od];B[ob];W[pb];B[pa];W[qb];B[rc];W[rd];B[kb];W[rb];B[gc];W[sc];B[hk];W[jl];B[jk];W[kl];B[kk];W[ll];B[lk];W[ml];B[mk];W[mm];B[nl];W[mn];B[nm];W[nn];B[il];W[im];B[jm];W[km];B[kn];W[jn];B[hm];W[in];B[hn];W[jm];B[lm];W[jn];B[in];W[iq];B[jm];W[gq];B[eq];W[fr];B[er];W[es];B[fs];W[gs];B[gr];W[hr];B[ir];W[jr];B[if];W[is];B[gi];W[mf];B[lg];W[ng];B[mg];W[nf];B[lf];W[mc];B[ld];W[nb];B[mb];W[oa];B[ma];W[na];B[lc];W[nc];B[qc];W[pc];B[qa];W[ra];B[cb];W[bb];B[ba];W[db];B[ca];W[eb];B[ab];W[bc];B[da];W[ec];B[ea];W[fb];B[fa];W[gb];B[ga];W[hb];B[ib];W[hc];B[gd];W[hd];B[he];W[ic];B[id];W[jc];B[kc];W[jd];B[je];W[ie];B[jb];W[id];B[ha];W[ge];B[hg];W[hf];B[gf];W[he];B[fe];W[jf];B[ke];W[ig];B[jg];W[if];B[ih];W[jh];B[kg];W[hh];B[gh];W[ii];B[fc];W[gg];B[ed];W[ff]
