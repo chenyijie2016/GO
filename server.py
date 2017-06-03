@@ -43,6 +43,11 @@ def information():
     return render_template('static/information.html')
 
 
+@app.route('/blockchain', methods=['POST'])
+def post_info():
+    print(request.form.get('hello'))
+    return 'ok'
+
 # 以下是接受到各个不同事件时的处理函数
 
 # 测试遗留 忽略即可
@@ -181,7 +186,7 @@ def AI_message(msg):
 
     if msg['method'] == 'play':
         if DEBUG:
-            print ('sending AI message', result)
+            print('sending AI message', result)
         emit('ai_game_client', result)
 
 
@@ -201,5 +206,12 @@ def modify_information(msg):
     emit('set_user_information_reply_ok', {})
 
 
+@socketio.on('game_over_event')
+def game_over(msg):
+    if DEBUG:
+        print('game over message', msg)
+    emit('game_over', msg, broadcast=True)
+
+
 if __name__ == '__main__':
-    socketio.run(app, host='0.0.0.0', port=80)
+    socketio.run(app, host='0.0.0.0', port=8080)

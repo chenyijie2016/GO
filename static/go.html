@@ -164,7 +164,7 @@
 			<button class="btn" onclick="send_pass()">PASS</button>
 			<button class="btn" onclick="send_undo()">悔棋</button>
 			<button class="btn" onclick="send_tie()">求和</button>
-			<button class="btn" onclick="send_fail()">认输</button>
+			<button class="btn" onclick="quit()">认输</button>
 
 		</div>
 		<a style="margin: auto;color: #DEDEDE;" href="https://github.com/chenyijie2016/GO" target="_blank">项目地址</a>
@@ -192,7 +192,7 @@
 	var peer_play = false;
 	var have_undoed = false;
 	var AI_mode = false;
-
+	var emeny_name = '';
 	var boardElement = document.querySelector(".tenuki-board");
 	var game = new tenuki.Game(boardElement);
 	game.setup();
@@ -371,6 +371,7 @@
 			{
 				alert('另一个用户成功连接,游戏开始!');
 				$('#gameinfo').text($('#user_id').val() + '(黑)和' + msg.user_id + '(白)的对决');
+				emeny_name = msg.user_id;
 				$('div#player_side').text('你执黑棋');
 				game_ready = true;
 				side_now='black';
@@ -380,6 +381,7 @@
 			{
 				alert('成功连接游戏,游戏开始!');
 				$('#gameinfo').text(msg.emeny + '(黑)和' + $('#user_id').val() + '(白)的对决');
+				emeny_name = msg.emeny
 				side_me = 'white';
 				side_now = 'black';
 				game_ready = true;
@@ -510,6 +512,59 @@
 		setsystemmessage('敌方落子:[' + letter_x + ',' + letter_y + ']\n现在轮到我方落子');
 
 	});
+	
+	//游戏结束事件
+	socket.on('game_over', function (msg)
+	{
+		if(game_ready && msg.game_id == $('#game_id').val())
+		{
+			game_ready = false;
+
+			if(msg.winner == $('#user_id').val())
+			{
+				alert('对手认输,恭喜你获得胜利!');
+				setsystemmessage('游戏结束\n胜利者是'+msg.winner+'\n刷新页面开始下一句游戏');
+			}
+			else
+			{
+				alert('很遗憾,你失败了......');
+				setsystemmessage('游戏结束\n胜利者是'+msg.winner+'\n刷新页面开始下一句游戏');
+			}
+
+		}
+
+	});
+	
+	
+	function quit()
+	{
+		if(game_ready)
+		{
+
+			socket.emit('game_over_event',
+				{'game_id': $('#game_id').val(), 'winner': emeny_name, 'loser': $('#user_id').val()});
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	//发送弃权信息
 	function send_pass()
 	{

@@ -122,3 +122,11 @@ def get_user_information(user_):
 
 def modify_user_information(msg):
     return user.modify_user_information(msg)
+
+
+def game_over(msg):
+    """
+    处理游戏结束信息
+    :param msg: 
+    """
+    return gf.game_over(msg)

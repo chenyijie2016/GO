@@ -71,9 +71,7 @@ def join_game(game):
 
     game_list[game_list.index(cur_game)] = update_game
 
-    f = open(DATABASE_FILE, 'w')
-    f.write(json.dumps(game_list))
-    f.close()
+    write_list_to_database(game_list, DATABASE_FILE)
 
 
 def get_game(game):
@@ -101,10 +99,31 @@ def get_wait_game():
     for cur_game in game_list:
         if cur_game['status'] == 'wait':
             wait_game_list.append(cur_game)
+            break
     result = ''
     for x in wait_game_list:
         result += '创建人ID: ' + x['player1'] + ' 游戏ID: ' + x['game_id'] + '<br>'
     return result
+
+
+def game_over(msg):
+    change_game_status(msg, 'over')
+
+
+
+def change_game_status(game_dict, status):
+    """
+    改变游戏状态,在处理游戏结束事件时使用
+    :param game_dict: 
+    :param status: 
+    """
+    game_list = load_database_to_list(DATABASE_FILE)
+    for cur_game in game_list:
+        if cur_game['game_id'] == game_dict['game_id']:
+            update_game = cur_game
+            update_game['status'] = status
+            game_list[game_list.index(cur_game)] = update_game
+            break
 
 
 def load_database_to_list(DATABASE):
