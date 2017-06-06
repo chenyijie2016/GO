@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-import simpleAI
+# import simpleAI
+import requests
 import json
 DATABASE_FILE = 'game_database/game_status.db'
 SGF_FILE_PATH = 'game_database/sgf/'
@@ -22,7 +23,13 @@ def create_ai_game(msg):
 
 def play_ai_game(msg):
     write_record(msg)
-    result = simpleAI.AI(msg)
+    response = requests.post('http://localhost:6000', data=msg)
+    # 向本地6000端口post数据，具体url还需要修改？
+    # print(response.content.decode('utf-8'))
+
+    result = json.loads(response.content.decode('utf-8'))
+
+    # result = simpleAI.AI(msg)
     write_record(result)
     return {'game_id': msg['game_id'], 'msg': result['msg'], 'user_id': 'MuGo'}
 

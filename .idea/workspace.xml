@@ -1,13 +1,91 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="43465289-f2c9-42be-9fa6-022800ef29a2" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AI_FILE/savedmodel.data-00000-of-00001" afterPath="$PROJECT_DIR$/AI_FILE/savedmodel.data-00000-of-00001" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AI_FILE/savedmodel.index" afterPath="$PROJECT_DIR$/AI_FILE/savedmodel.index" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AI_FILE/savedmodel.meta" afterPath="$PROJECT_DIR$/AI_FILE/savedmodel.meta" />
+    <list default="true" id="43465289-f2c9-42be-9fa6-022800ef29a2" name="Default" comment="样式小更新，添加项目链接">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MuGo/AI_FILE/savedmodel.data-00000-of-00001" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MuGo/AI_FILE/savedmodel.index" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MuGo/AI_FILE/savedmodel.meta" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MuGo/AI_FILE/checkpoint" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MuGo/features.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MuGo/game_database/sgf/21323" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MuGo/game_database/sgf/213323132" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MuGo/game_database/sgf/217666" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MuGo/game_database/sgf/3213213" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MuGo/game_database/sgf/32321" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MuGo/game_database/sgf/53213" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MuGo/game_database/sgf/543123" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MuGo/game_database/sgf/54321323" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MuGo/game_database/sgf/79822" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MuGo/go.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MuGo/load_data_sets.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MuGo/main.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MuGo/policy.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MuGo/server.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MuGo/sgf_wrapper.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MuGo/simpleAI.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MuGo/strategies.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MuGo/tests/test_datasets.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MuGo/tests/test_features.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MuGo/tests/test_go.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MuGo/tests/test_sgf_wrapper.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MuGo/tests/test_strategies.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MuGo/tests/test_utils.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MuGo/utils.py" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.gitignore" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AI_FILE/checkpoint" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AI_FILE/savedmodel.data-00000-of-00001" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AI_FILE/savedmodel.index" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AI_FILE/savedmodel.meta" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/features.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/game_database/sgf/12365" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/game_database/sgf/13233" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/game_database/sgf/1323464" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/game_database/sgf/233" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/game_database/sgf/3421332" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/game_database/sgf/34355213" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/game_database/sgf/4213" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/game_database/sgf/541223" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/game_database/sgf/565465" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/game_database/sgf/asd" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/game_database/sgf/gg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/game_database/sgf/lll" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/game_database/sgf/mof" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/game_database/sgf/moyyf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/game_database/sgf/qwe" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/game_database/sgf/ss" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/game_database/sgf/test" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/game_database/sgf/test123" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/game_database/sgf/test1234" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/game_database/sgf/test2" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/game_database/sgf/test3" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/game_database/sgf/test5" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/game_database/sgf/yyf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/go.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/load_data_sets.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/my_training_run/test/events.out.tfevents.1496238235.LAPTOP-4OF5GNQQ" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/my_training_run/test/events.out.tfevents.1496313933.LAPTOP-4OF5GNQQ" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/my_training_run/test/events.out.tfevents.1496415583.LAPTOP-4OF5GNQQ" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/my_training_run/training/events.out.tfevents.1496238235.LAPTOP-4OF5GNQQ" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/my_training_run/training/events.out.tfevents.1496313933.LAPTOP-4OF5GNQQ" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/my_training_run/training/events.out.tfevents.1496415583.LAPTOP-4OF5GNQQ" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/main.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/misc/exploding_activations.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/policy.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/requirements.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/sgf_wrapper.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/strategies.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tests/test_datasets.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tests/test_features.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tests/test_go.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tests/test_sgf_wrapper.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tests/test_strategies.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tests/test_utils.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/train.bat" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AI_FILE/checkpoint" afterPath="$PROJECT_DIR$/AI_FILE/checkpoint" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AI.py" afterPath="$PROJECT_DIR$/AI.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/game_database/game_status.db" afterPath="$PROJECT_DIR$/game_database/game_status.db" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/user_database/user_info.db" afterPath="$PROJECT_DIR$/user_database/user_info.db" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/user_database/user_list.db" afterPath="$PROJECT_DIR$/user_database/user_list.db" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -37,12 +115,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="server.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="server.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3971">
+            <state relative-caret-position="644">
               <caret line="212" column="42" lean-forward="false" selection-start-line="212" selection-start-column="42" selection-end-line="212" selection-end-column="42" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="server.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/MuGo/server.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="589">
+              <caret line="31" column="40" lean-forward="false" selection-start-line="31" selection-start-column="40" selection-end-line="31" selection-end-column="40" />
+              <folding>
+                <element signature="e#149#207#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -50,7 +140,7 @@
       <file leaf-file-name="gamemain.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/gamemain.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2432">
+            <state relative-caret-position="739">
               <caret line="131" column="28" lean-forward="false" selection-start-line="131" selection-start-column="28" selection-end-line="131" selection-end-column="28" />
               <folding />
             </state>
@@ -70,9 +160,11 @@
       <file leaf-file-name="AI.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/AI.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="38">
-              <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="247">
+              <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+              <folding>
+                <element signature="e#42#57#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -81,17 +173,7 @@
         <entry file="file://$PROJECT_DIR$/simpleAI.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="247">
-              <caret line="21" column="47" lean-forward="false" selection-start-line="21" selection-start-column="47" selection-end-line="21" selection-end-column="47" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="policy.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/policy.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="456">
-              <caret line="31" column="0" lean-forward="false" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+              <caret line="69" column="55" lean-forward="false" selection-start-line="69" selection-start-column="55" selection-end-line="69" selection-end-column="55" />
               <folding />
             </state>
           </provider>
@@ -124,7 +206,6 @@
       <list>
         <option value="$PROJECT_DIR$/manger.py" />
         <option value="$PROJECT_DIR$/MuGo/simpleAI.py" />
-        <option value="$PROJECT_DIR$/AI.py" />
         <option value="$PROJECT_DIR$/test.py" />
         <option value="$PROJECT_DIR$/policy.py" />
         <option value="$PROJECT_DIR$/simpleAI.py" />
@@ -133,6 +214,9 @@
         <option value="$PROJECT_DIR$/game_function.py" />
         <option value="$PROJECT_DIR$/server.py" />
         <option value="$PROJECT_DIR$/static/go.html" />
+        <option value="$PROJECT_DIR$/MuGo/AI_FILE/server.py" />
+        <option value="$PROJECT_DIR$/AI.py" />
+        <option value="$PROJECT_DIR$/MuGo/server.py" />
       </list>
     </option>
   </component>
@@ -145,7 +229,7 @@
   <component name="ProjectFrameBounds">
     <option name="x" value="-9" />
     <option name="y" value="-9" />
-    <option name="width" value="1938" />
+    <option name="width" value="1924" />
     <option name="height" value="1048" />
   </component>
   <component name="ProjectView">
@@ -163,6 +247,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -177,16 +263,19 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../test/add[SZ].py" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\cyj\Desktop\GO\MuGo" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -213,10 +302,75 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="GO" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/server.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="DjangoTestsConfigurationType" factoryName="Django tests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="GO" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="TARGET" value="" />
+      <option name="SETTINGS_FILE" value="" />
+      <option name="CUSTOM_SETTINGS" value="false" />
+      <option name="USE_OPTIONS" value="false" />
+      <option name="OPTIONS" value="" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavaScriptTestRunnerJest" factoryName="Jest">
+      <node-interpreter value="project" />
+      <working-dir value="" />
+      <envs />
+      <scope-kind value="ALL" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavaScriptTestRunnerProtractor" factoryName="Protractor">
+      <config-file value="" />
+      <node-interpreter value="project" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
+      <method />
+    </configuration>
+    <configuration default="true" type="PyBehaveRunConfigurationType" factoryName="Behave">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="GO" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="ADDITIONAL_ARGS" value="" />
+      <method />
+    </configuration>
+    <configuration default="true" type="PyLettuceRunConfigurationType" factoryName="Lettuce">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="GO" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="ADDITIONAL_ARGS" value="" />
       <method />
     </configuration>
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
@@ -231,10 +385,76 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="GO" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="Tox" factoryName="Tox">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <module name="GO" />
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <gulpfile />
+      <tasks />
+      <arguments />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.npm" factoryName="npm">
+      <command value="run" />
+      <scripts />
+      <node-interpreter value="project" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Doctests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="GO" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Unittests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="GO" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;.&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
       <method />
     </configuration>
     <list size="1">
@@ -301,12 +521,12 @@
     <option name="totallyTimeSpent" value="23142000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
-    <editor active="true" />
+    <frame x="-9" y="-9" width="1924" height="1048" extended-state="1" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.246875" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24868836" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32893288" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -353,19 +573,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/static/go.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1120">
-          <caret line="595" column="7" lean-forward="false" selection-start-line="595" selection-start-column="7" selection-end-line="595" selection-end-column="7" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <marker date="1496507431318" expanded="true" signature="4974:5180" ph="..." />
-            <marker date="1496507431318" expanded="true" signature="13056:15205" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/server.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="459">
@@ -731,11 +938,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/AI.py">
+    <entry file="file://$PROJECT_DIR$/../test/add[SZ].py" />
+    <entry file="file://$PROJECT_DIR$/static/go.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="38">
-          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="3002">
+          <caret line="158" column="0" lean-forward="false" selection-start-line="158" selection-start-column="0" selection-end-line="158" selection-end-column="0" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <marker date="1496507431318" expanded="true" signature="4974:5180" ph="..." />
+            <marker date="1496507431318" expanded="true" signature="13056:15205" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -743,15 +956,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="456">
           <caret line="31" column="0" lean-forward="false" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../test/add[SZ].py" />
-    <entry file="file://$PROJECT_DIR$/simpleAI.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="247">
-          <caret line="21" column="47" lean-forward="false" selection-start-line="21" selection-start-column="47" selection-end-line="21" selection-end-column="47" />
           <folding />
         </state>
       </provider>
@@ -764,14 +968,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/gamemain.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2432">
-          <caret line="131" column="28" lean-forward="false" selection-start-line="131" selection-start-column="28" selection-end-line="131" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/game_function.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2071">
@@ -780,23 +976,46 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/gamemain.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="739">
+          <caret line="131" column="28" lean-forward="false" selection-start-line="131" selection-start-column="28" selection-end-line="131" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/server.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3971">
+        <state relative-caret-position="644">
           <caret line="212" column="42" lean-forward="false" selection-start-line="212" selection-start-column="42" selection-end-line="212" selection-end-column="42" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/static/go.html">
+    <entry file="file://$PROJECT_DIR$/AI.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3002">
-          <caret line="158" column="0" lean-forward="false" selection-start-line="158" selection-start-column="0" selection-end-line="158" selection-end-column="0" />
+        <state relative-caret-position="247">
+          <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
           <folding>
-            <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <marker date="1496507431318" expanded="true" signature="4974:5180" ph="..." />
-            <marker date="1496507431318" expanded="true" signature="13056:15205" ph="..." />
+            <element signature="e#42#57#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/simpleAI.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="247">
+          <caret line="69" column="55" lean-forward="false" selection-start-line="69" selection-start-column="55" selection-end-line="69" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MuGo/server.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="589">
+          <caret line="31" column="40" lean-forward="false" selection-start-line="31" selection-start-column="40" selection-end-line="31" selection-end-column="40" />
+          <folding>
+            <element signature="e#149#207#0" expanded="true" />
           </folding>
         </state>
       </provider>
