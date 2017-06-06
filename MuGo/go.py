@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 '''
 A board is a NxN numpy array.
 A Coordinate is a tuple index into the board.
@@ -16,12 +18,16 @@ import numpy as np
 # This means that swapping colors is as simple as multiplying array by -1.
 WHITE, EMPTY, BLACK, FILL, KO, UNKNOWN = range(-1, 5)
 
+
 class PlayerMove(namedtuple('PlayerMove', ['color', 'move'])): pass
+
 
 # Represents "group not found" in the LibertyTracker object
 MISSING_GROUP_ID = -1
 
+
 class IllegalMove(Exception): pass
+
 
 # these are initialized by set_board_size
 N = None
@@ -29,6 +35,7 @@ ALL_COORDS = []
 EMPTY_BOARD = None
 NEIGHBORS = {}
 DIAGONALS = {}
+
 
 def set_board_size(n):
     '''
@@ -40,15 +47,20 @@ def set_board_size(n):
     N = n
     ALL_COORDS = [(i, j) for i in range(n) for j in range(n)]
     EMPTY_BOARD = np.zeros([n, n], dtype=np.int8)
+
     def check_bounds(c):
         return c[0] % n == c[0] and c[1] % n == c[1]
 
-    NEIGHBORS = {(x, y): list(filter(check_bounds, [(x+1, y), (x-1, y), (x, y+1), (x, y-1)])) for x, y in ALL_COORDS}
-    DIAGONALS = {(x, y): list(filter(check_bounds, [(x+1, y+1), (x+1, y-1), (x-1, y+1), (x-1, y-1)])) for x, y in ALL_COORDS}
+    NEIGHBORS = {(x, y): list(filter(check_bounds, [(x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)])) for x, y in
+                 ALL_COORDS}
+    DIAGONALS = {(x, y): list(filter(check_bounds, [(x + 1, y + 1), (x + 1, y - 1), (x - 1, y + 1), (x - 1, y - 1)]))
+                 for x, y in ALL_COORDS}
+
 
 def place_stones(board, color, stones):
     for s in stones:
         board[s] = color
+
 
 def find_reached(board, c):
     color = board[c]
@@ -65,6 +77,7 @@ def find_reached(board, c):
                 reached.add(n)
     return chain, reached
 
+
 def is_koish(board, c):
     'Check if c is surrounded on all sides by 1 color, and return that color'
     if board[c] != EMPTY: return None
@@ -73,6 +86,7 @@ def is_koish(board, c):
         return list(neighbors)[0]
     else:
         return None
+
 
 def is_eyeish(board, c):
     'Check if c is an eye, for the purpose of restricting MC rollouts.'
@@ -91,12 +105,14 @@ def is_eyeish(board, c):
     else:
         return color
 
+
 class Group(namedtuple('Group', ['id', 'stones', 'liberties', 'color'])):
     '''
     stones: a set of Coordinates belonging to this group
     liberties: a set of Coordinates that are empty and adjacent to this group.
     color: color of this group
     '''
+
     def __eq__(self, other):
         return self.stones == other.stones and self.liberties == other.liberties and self.color == other.color
 
@@ -234,8 +250,10 @@ class LibertyTracker():
                 if group_id != MISSING_GROUP_ID:
                     self._update_liberties(group_id, add={s})
 
+
 class Position():
-    def __init__(self, board=None, n=0, komi=7.5, caps=(0, 0), lib_tracker=None, ko=None, recent=tuple(), to_play=BLACK):
+    def __init__(self, board=None, n=0, komi=7.5, caps=(0, 0), lib_tracker=None, ko=None, recent=tuple(),
+                 to_play=BLACK):
         '''
         board: a numpy array
         n: an int representing moves played so far
@@ -277,7 +295,7 @@ class Position():
             row = []
             for j in range(N):
                 appended = '<' if (self.recent and (i, j) == self.recent[-1].move) else ' '
-                row.append(pretty_print_map[board[i,j]] + appended)
+                row.append(pretty_print_map[board[i, j]] + appended)
             raw_board_contents.append(''.join(row))
 
         row_labels = ['%2d ' % i for i in range(N, 0, -1)]
@@ -389,7 +407,7 @@ class Position():
             elif O_border and not X_border:
                 territory_color = WHITE
             else:
-                territory_color = UNKNOWN # dame, or seki
+                territory_color = UNKNOWN  # dame, or seki
             place_stones(working_board, territory_color, territory)
 
         return np.count_nonzero(working_board == BLACK) - np.count_nonzero(working_board == WHITE) - self.komi
@@ -402,5 +420,6 @@ class Position():
             return 'W+' + '%.1f' % abs(score)
         else:
             return 'DRAW'
+
 
 set_board_size(19)

@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 import argparse
 import argh
 import os
@@ -11,6 +13,7 @@ from strategies import RandomPlayer, PolicyNetworkBestMovePlayer, PolicyNetworkR
 from load_data_sets import DataSet, parse_data_sets
 
 TRAINING_CHUNK_RE = re.compile(r"train\d+\.chunk.gz")
+
 
 def gtp(strategy, read_file=None):
     n = PolicyNetwork(use_cpu=True)
@@ -41,6 +44,7 @@ def gtp(strategy, read_file=None):
             sys.stdout.write(engine_reply)
             sys.stdout.flush()
 
+
 def preprocess(*data_sets, processed_dir="processed_data"):
     processed_dir = os.path.join(os.getcwd(), processed_dir)
     if not os.path.isdir(processed_dir):
@@ -60,13 +64,14 @@ def preprocess(*data_sets, processed_dir="processed_data"):
             print("Writing training chunk %s" % i)
         train_filename = os.path.join(processed_dir, "train%s.chunk.gz" % i)
         train_dataset.write(train_filename)
-    print("%s chunks written" % (i+1))
+    print("%s chunks written" % (i + 1))
+
 
 def train(processed_dir, read_file=None, save_file=None, epochs=10, logdir=None, checkpoint_freq=10000):
     test_dataset = DataSet.read(os.path.join(processed_dir, "test.chunk.gz"))
-    train_chunk_files = [os.path.join(processed_dir, fname) 
-        for fname in os.listdir(processed_dir)
-        if TRAINING_CHUNK_RE.match(fname)]
+    train_chunk_files = [os.path.join(processed_dir, fname)
+                         for fname in os.listdir(processed_dir)
+                         if TRAINING_CHUNK_RE.match(fname)]
     if read_file is not None:
         read_file = os.path.join(os.getcwd(), save_file)
     n = PolicyNetwork()
@@ -84,7 +89,6 @@ def train(processed_dir, read_file=None, save_file=None, epochs=10, logdir=None,
             if n.get_global_step() > last_save_checkpoint + checkpoint_freq:
                 n.check_accuracy(test_dataset)
                 last_save_checkpoint = n.get_global_step()
-
 
 
 parser = argparse.ArgumentParser()

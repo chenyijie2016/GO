@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 '''
 Code to extract a series of positions + their next moves from an SGF.
 
@@ -15,14 +17,17 @@ from go import Position
 from utils import parse_sgf_coords as pc
 import sgf
 
+
 class GameMetadata(namedtuple("GameMetadata", "result handicap board_size")):
     pass
+
 
 class PositionWithContext(namedtuple("SgfPosition", "position next_move metadata")):
     '''
     Wrapper around go.Position.
     Stores a position, the move that came next, and the eventual result.
     '''
+
     def is_usable(self):
         return all([
             self.position is not None,
@@ -34,6 +39,7 @@ class PositionWithContext(namedtuple("SgfPosition", "position next_move metadata
     def __str__(self):
         return str(self.position) + '\nNext move: {} Result: {}'.format(self.next_move, self.result)
 
+
 def sgf_prop(value_list):
     'Converts raw sgf library output to sensible value'
     if value_list is None:
@@ -43,8 +49,10 @@ def sgf_prop(value_list):
     else:
         return value_list
 
+
 def sgf_prop_get(props, key, default):
     return sgf_prop(props.get(key, default))
+
 
 def handle_node(pos, node):
     'A node can either add B+W stones, play as B, or play as W.'
@@ -63,12 +71,15 @@ def handle_node(pos, node):
     else:
         return pos
 
+
 def add_stones(pos, black_stones_added, white_stones_added):
     working_board = np.copy(pos.board)
     go.place_stones(working_board, go.BLACK, black_stones_added)
     go.place_stones(working_board, go.WHITE, white_stones_added)
-    new_position = Position(board=working_board, n=pos.n, komi=pos.komi, caps=pos.caps, ko=pos.ko, recent=pos.recent, to_play=pos.to_play)
+    new_position = Position(board=working_board, n=pos.n, komi=pos.komi, caps=pos.caps, ko=pos.ko, recent=pos.recent,
+                            to_play=pos.to_play)
     return new_position
+
 
 def get_next_move(node):
     if not node.next:
@@ -79,12 +90,14 @@ def get_next_move(node):
     else:
         return pc(props['B'][0])
 
+
 def maybe_correct_next(pos, next_node):
     if next_node is None:
         return
     if (('B' in next_node.properties and not pos.to_play == go.BLACK) or
-        ('W' in next_node.properties and not pos.to_play == go.WHITE)):
+            ('W' in next_node.properties and not pos.to_play == go.WHITE)):
         pos.flip_playerturn(mutate=True)
+
 
 def replay_sgf(sgf_contents):
     '''
@@ -115,6 +128,7 @@ def replay_sgf(sgf_contents):
         next_move = get_next_move(current_node)
         yield PositionWithContext(pos, next_move, metadata)
         current_node = current_node.next
+
 
 def replay_position(position):
     '''

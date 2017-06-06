@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 import itertools
 import gzip
 import numpy as np
@@ -15,8 +17,10 @@ CHUNK_SIZE = 4096
 CHUNK_HEADER_FORMAT = "iii?"
 CHUNK_HEADER_SIZE = struct.calcsize(CHUNK_HEADER_FORMAT)
 
+
 def take_n(n, iterable):
     return list(itertools.islice(iterable, n))
+
 
 def iter_chunks(chunk_size, iterator):
     while True:
@@ -27,12 +31,14 @@ def iter_chunks(chunk_size, iterator):
         else:
             break
 
+
 def make_onehot(coords):
     num_positions = len(coords)
     output = np.zeros([num_positions, go.N ** 2], dtype=np.uint8)
     for i, coord in enumerate(coords):
         output[i, utils.flatten_coords(coord)] = 1
     return output
+
 
 def find_sgf_files(*dataset_dirs):
     for dataset_dir in dataset_dirs:
@@ -42,15 +48,17 @@ def find_sgf_files(*dataset_dirs):
             if os.path.isfile(f) and f.endswith(".sgf"):
                 yield f
 
+
 def get_positions_from_sgf(file):
     with open(file) as f:
         for position_w_context in replay_sgf(f.read()):
             if position_w_context.is_usable():
                 yield position_w_context
 
+
 def split_test_training(positions_w_context, est_num_positions):
     print("Estimated number of chunks: %s" % (est_num_positions // CHUNK_SIZE), file=sys.stderr)
-    desired_test_size = 10**5
+    desired_test_size = 10 ** 5
     if est_num_positions < 2 * desired_test_size:
         positions_w_context = list(positions_w_context)
         test_size = len(positions_w_context) // 3
@@ -67,7 +75,8 @@ class DataSet(object):
         self.next_moves = next_moves
         self.results = results
         self.is_test = is_test
-        assert pos_features.shape[0] == next_moves.shape[0], "Didn't pass in same number of pos_features and next_moves."
+        assert pos_features.shape[0] == next_moves.shape[
+            0], "Didn't pass in same number of pos_features and next_moves."
         self.data_size = pos_features.shape[0]
         self.board_size = pos_features.shape[1]
         self.input_planes = pos_features.shape[-1]
@@ -95,7 +104,8 @@ class DataSet(object):
         return DataSet(extracted_features, encoded_moves, results, is_test=is_test)
 
     def write(self, filename):
-        header_bytes = struct.pack(CHUNK_HEADER_FORMAT, self.data_size, self.board_size, self.input_planes, self.is_test)
+        header_bytes = struct.pack(CHUNK_HEADER_FORMAT, self.data_size, self.board_size, self.input_planes,
+                                   self.is_test)
         position_bytes = np.packbits(self.pos_features).tostring()
         next_move_bytes = np.packbits(self.next_moves).tostring()
         with gzip.open(filename, "wb", compresslevel=6) as f:
@@ -126,10 +136,11 @@ class DataSet(object):
 
         return DataSet(pos_features, next_moves, [], is_test=is_test)
 
+
 def parse_data_sets(*data_sets):
     sgf_files = list(find_sgf_files(*data_sets))
     print("%s sgfs found." % len(sgf_files), file=sys.stderr)
-    est_num_positions = len(sgf_files) * 200 # about 200 moves per game
+    est_num_positions = len(sgf_files) * 200  # about 200 moves per game
     positions_w_context = itertools.chain(*map(get_positions_from_sgf, sgf_files))
 
     test_chunk, training_chunks = split_test_training(positions_w_context, est_num_positions)
