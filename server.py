@@ -10,15 +10,15 @@ app.config['SECRET_KEY'] = 'secret!'
 
 socketio = SocketIO(app)
 
-# 设置是否输出调试信息
+# TO print Debug information?
 DEBUG = True
 
 
+# main page
 @app.route('/')
 def index():
     if DEBUG:
         print('connect')
-    # 返回网站主页
     return render_template('static/go.html')
 
 
@@ -48,12 +48,10 @@ def post_info():
     print(request.form.get('hello'))
     return 'ok'
 
-# 以下是接受到各个不同事件时的处理函数
 
-# 测试遗留 忽略即可
+# just ignore it
 @socketio.on('client_event')
 def client_msg(msg):
-    # print('接受消息:', end='')
     # print(msg)
     # res = go.place(msg['data'])
     # emit('server_response', {'data': res})
@@ -61,7 +59,8 @@ def client_msg(msg):
     pass
 
 
-# 建立连接
+# establish connection with client
+# in test mod
 @socketio.on('connect_event')
 def connected_msg(msg):
     if DEBUG:
@@ -72,7 +71,7 @@ def connected_msg(msg):
 @socketio.on('game_start')
 def game_start_msg(msg):
     """
-    游戏开始事件
+    deal with game start message
     :param msg: 
     """
     if DEBUG:
@@ -101,22 +100,22 @@ def game_start_msg(msg):
 @socketio.on('play_game_server')
 def play_game_msg(msg):
     """
-    接受游戏落字消息
+    play !
     :param msg: 
     """
     if DEBUG:
         print('play info:', msg)
-    # 记录到sgf文件中
+    # write log to sgf file
     gamemain.write_record(msg)
-    # 向其他连接的客户端广播
+    # broadcast to other client
     emit('play_game_client', msg, broadcast=True)
 
 
 @socketio.on('message')
 def message(msg):
     """
-    处理用户发来的消息
-    直接向其他客户端广播
+    user mssage
+    broadcast to other client
     :param msg: 
     """
     if DEBUG:
@@ -133,10 +132,6 @@ def send_wait_game(msg):
 
 @socketio.on('register')
 def register(msg):
-    """
-    处理注册
-    :param msg: 
-    """
     if DEBUG:
         print('request for register', msg)
     if gamemain.register(msg):
@@ -151,10 +146,6 @@ def register(msg):
 
 @socketio.on('login')
 def login(msg):
-    """
-    处理登录
-    :param msg: 
-    """
     if DEBUG:
         print('request for login', msg)
 
@@ -171,10 +162,7 @@ def login(msg):
 
 @socketio.on('AI_event')
 def AI_message(msg):
-    """
-    处理AI对局信息
-    :param msg: 
-    """
+
     if DEBUG:
         print('receive AI message', msg)
     result = gamemain.ai_game(msg)

@@ -34,5 +34,5 @@ def post_info():
 
 
 if __name__ == '__main__':
-    # 监听所有来自6000端口的数据，在kubernetes的通信中要修改？
+    # listen all requests form port 6000
     app.run('0.0.0.0', port=6000)

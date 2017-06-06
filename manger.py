@@ -13,11 +13,11 @@ DATABASE_FILE = 'game_database/game_status.db'
 USER_INFO_DATABASE = 'user_database/user_info.db'
 
 def main():
-    print('输入选项进行操作:')
-    print('[1]:清空所有数据')
-    print('[2]:显示已注册用户')
-    print('[3]:显示对局信息')
-    print('[4]:清除所有对局信息')
+    print('Enter the options:')
+    print('[1]:Clear all data')
+    print('[2]:Show registered users')
+    print('[3]:Show all game information')
+    print('[4]:Clear all game information')
     option = input()
     if option == '1':
         clear_all()
@@ -33,7 +33,7 @@ def main():
 
 
 def clear_all():
-    a = input('确定要清除所有数据？(Y/N)')
+    a = input('Are you sure you want to clear all data?(Y/N)')
     if a == 'y' or a == 'Y':
         f = open(USER_DATABASE_FILE, 'w')
         f.write('[]')
@@ -45,36 +45,36 @@ def clear_all():
         f.write('[]')
         f.close()
         os.system('del game_database\sgf\*.sgf')
-        print('清除数据库成功')
+        print('Clear the database successfully!')
 
 
 def showDataBase():
     f = open(USER_DATABASE_FILE, 'r')
     user_list = json.loads(f.read())
     if len(user_list) == 0:
-        print('没有用户信息')
+        print('No user information')
         return
     for user in user_list:
-        print('用户名: ', user['user_id'], ' 密码: ******')
+        print('User ID: ', user['user_id'], ' Password: ******')
 
 
 def showGameDataBase():
     f = open(DATABASE_FILE, 'r')
     game_list = json.loads(f.read())
     if len(game_list) == 0:
-        print('没有对局信息')
+        print('No information on the game')
         return
     for game in game_list:
-        print('对局ID: ', game['game_id'], end=' ')
-        print('创建者: ', game['player1'], end=' ')
-        print('游戏人数: ', game['player_num'])
+        print('Game ID: ', game['game_id'], end=' ')
+        print('Creater: ', game['player1'], end=' ')
+        print('Player Number: ', game['player_num'])
 
 
 def clearGameStatus():
     f = open(DATABASE_FILE, 'w')
     f.write('[]')
     f.close()
-    print('清除数据库成功')
+    print('Clear the database successfully!')
 
 if __name__ == '__main__':
     main()

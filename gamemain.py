@@ -10,7 +10,7 @@ SGF_FILE_PATH = 'game_database/sgf/'
 
 def write_record(game):
     """
-    记录落子信息到sgf文件中
+    write game message to sgf file
     :param game: 
     """
     f = open(SGF_FILE_PATH + game['game_id'] + '.sgf', 'a')
@@ -20,7 +20,7 @@ def write_record(game):
 
 def create_sgf(item):
     """
-    创建初始sgf文件
+    create empty sgf file
     :param item: 
     """
     f = open(SGF_FILE_PATH + item['game_id'] + '.sgf', 'w')
@@ -34,13 +34,13 @@ def create_sgf(item):
 
 def register(gameuser):
     """
-    用户注册
+    user register
     :param gameuser: 
     :return: TRUE/FALSE
     """
     if user.register(gameuser):
-        print('成功注册用户:', gameuser['user_id'])
-        # 设置默认的用户信息
+        print('Successfully Register User:', gameuser['user_id'])
+        # set defult user information
         user.set_user_information(
             {'user_id': gameuser['user_id'], 'rank': 1000, 'grade': '18k', 'country': 'unknown', 'intr': 'none',
              'win': 0, 'lose': 0})
@@ -51,8 +51,8 @@ def register(gameuser):
 
 def login(gameuser):
     """
-    用户登录
-    :param gameuser: 
+    user login
+    :param gameuser(dict) {"user_id", "password"}:
     :return: TRUE/FALSE
     """
     if user.login(gameuser):
@@ -63,9 +63,9 @@ def login(gameuser):
 
 def deal_game_start(game):
     """
-    处理开始游戏的信息
-    :param game: game结构体
-    :return: dict类型 operate表示操作 status 表示成功或失败
+    game start
+    :param game: game(dict)
+    :return: (dict) operate: ["create", "join", "none"] status [1 --> success, 0 --> fail]
     """
     if not gf.is_exist_game(game):
         gf.create_game(game)
@@ -81,28 +81,25 @@ def deal_game_start(game):
 
 def get_game(game):
     """
-    获取游戏信息
-    :param game: 
+    get game information
+    :param game(dict): {"game_id","....", ...}
     :return: 
     """
     return gf.get_game(game)
 
 
 def get_wait_game():
-    """
-    获取正在等待中的游戏列表
-    :return: 
-    """
     return gf.get_wait_game()
 
 
 def ai_game(msg):
     """
-    处理AI对局信息
-    msg中的method属性：
-        create:创建对局
-        play:进行对战
-    :param msg: 
+    deal with AI game message
+    :param msg(dict)["game_id", "user_id", "method"]:
+
+    property: method：
+        create:create a new AI game
+        play: playing
     """
     if msg['method'] == 'create':
         if gf.is_exist_game(msg):
@@ -125,8 +122,4 @@ def modify_user_information(msg):
 
 
 def game_over(msg):
-    """
-    处理游戏结束信息
-    :param msg: 
-    """
     return gf.game_over(msg)

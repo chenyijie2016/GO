@@ -1,5 +1,6 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# 实时处理游戏信息
+
 
 import json
 
@@ -9,8 +10,8 @@ SGF_FILE_PATH = 'game_database/sgf/'
 
 def is_exist_game(game):
     """
-    检验游戏是否存在
-    :param game: game结构体
+    Does the game exists
+    :param game: game(dict)
     :return: TRUE / FALSE 
     """
 
@@ -25,8 +26,8 @@ def is_exist_game(game):
 
 def can_join_game(game):
     """
-    能否加入游戏
-    :param game: game结构体
+    can user join a existed game
+    :param game: game(dict)
     :return: TRUE / FALSE 
     """
     game_list = load_database_to_list(DATABASE_FILE)
@@ -41,8 +42,7 @@ def can_join_game(game):
 
 def create_game(game):
     """
-    创建游戏
-    :param game: game结构体
+    :param game: game(dict)
     """
     game_list = load_database_to_list(DATABASE_FILE)
 
@@ -54,8 +54,8 @@ def create_game(game):
 
 def join_game(game):
     """
-    加入游戏
-    :param game: game结构体
+    to join a existed game
+    :param game: game(dict)
     """
     game_list = load_database_to_list(DATABASE_FILE)
 
@@ -76,9 +76,9 @@ def join_game(game):
 
 def get_game(game):
     """
-    用于获取指定游戏id的具体对局信息
-    :param game: game结构体
-    :return: 具体对局信息
+    get game information with target game_id
+    :param game: game(dict)
+    :return: (dict)
     """
     game_list = load_database_to_list(DATABASE_FILE)
 
@@ -89,8 +89,8 @@ def get_game(game):
 
 def get_wait_game():
     """
-    获取正在等待中的游戏列表
-    :return: 
+    get the waitling games list
+    :return: (str)(HTML form)
     """
     game_list = load_database_to_list(DATABASE_FILE)
 
@@ -102,7 +102,7 @@ def get_wait_game():
             break
     result = ''
     for x in wait_game_list:
-        result += '创建人ID: ' + x['player1'] + ' 游戏ID: ' + x['game_id'] + '<br>'
+        result += 'Crteter ID: ' + x['player1'] + ' Game ID: ' + x['game_id'] + '<br>'
     return result
 
 
@@ -110,12 +110,11 @@ def game_over(msg):
     change_game_status(msg, 'over')
 
 
-
 def change_game_status(game_dict, status):
     """
-    改变游戏状态,在处理游戏结束事件时使用
-    :param game_dict: 
-    :param status: 
+    change game status , called when game is over
+    :param game_dict(dict):
+    :param status('wait'/'fight'/'over'):
     """
     game_list = load_database_to_list(DATABASE_FILE)
     for cur_game in game_list:
@@ -128,9 +127,9 @@ def change_game_status(game_dict, status):
 
 def load_database_to_list(DATABASE):
     """
-    从数据库文件中加载list
-    :param DATABASE: 
-    :return: 
+    load list from database file
+    :param (constant)DATABASE: Filename
+    :return: (list)
     """
     f = open(DATABASE, 'r')
     list_ = json.loads(f.read())
@@ -140,9 +139,9 @@ def load_database_to_list(DATABASE):
 
 def write_list_to_database(LIST, DATABASE):
     """
-    将list写入数据库文件
-    :param LIST: 
-    :param DATABASE: 
+    write list to database file
+    :param LIST: (list)
+    :param (constant)DATABASE: Filename
     """
     f = open(DATABASE, 'w')
     f.write(json.dumps(LIST))

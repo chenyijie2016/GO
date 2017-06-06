@@ -17,20 +17,20 @@ data_file_path = 'game_database/sgf/'
 
 
 def AI(msg):
-    global read_file  # 提取信息
+    global read_file  # Extract information
 
     data_file = data_file_path + msg['game_id']
     x, y, color = parse_input_msg(msg)
     print(x, y, color)
 
-    # 初始化策略网络
+    # Initialize the policy network
     n = PolicyNetwork(use_cpu=True)
     instance = PolicyNetworkBestMovePlayer(n, read_file)
     gtp_engine = gtp_lib.Engine(instance)
     # sys.stderr.write("GTP Enginene ready\n")
     AI_cmd = parse_AI_instruction(color)
 
-    # 查看是否已经开始下棋并记录
+    # To see if it has started playing chess and logging
     if os.path.exists(data_file):
         rfile = open(data_file, 'r')
         cmd_list = rfile.readlines()
@@ -43,7 +43,7 @@ def AI(msg):
         # sys.stdout.flush()
         rfile.close()
 
-    # 解析对方下棋指令，写进data
+    # Parse the other side of the chess instructions, write into the record file
     wfile = open(data_file, 'a')
     if msg['msg'][2].lower() == 't' and msg['msg'][3].lower() == 't':
         pass

@@ -5,22 +5,22 @@ USER_DATABASE_FILE = 'user_database/user_list.db'
 USER_INFORMATION_DATABASE_FILE = 'user_database/user_info.db'
 
 
-# 注意:注册前必须要有该路径和数据文件
+# Note: You must have this path and data file before registering
 def register(user):
     """
-    用户注册
-    :param user: 
-    :return: true表示注册成功,false表示注册失败
+    User registration
+    :param user: (dict)["user_id","password"]
+    :return: true/false
     """
     user_db = open(USER_DATABASE_FILE, 'r')
     user_list = json.loads(user_db.read())
 
-    # 检验id是否存在
+    # Whether the user_id exists?
     for pre_user in user_list:
         if user['user_id'] == pre_user['user_id']:
             return False
 
-    # 直接添加进数据库
+    # Add directly to the database
     user_list.append(user)
     user_db.close()
     user_db = open(USER_DATABASE_FILE, 'w')
@@ -29,18 +29,17 @@ def register(user):
     return True
 
 
-# TODO 校验密码改用更安全的方式实现
-# TODO 考虑密码用SHA256加密
+# TODO Check the password to a more secure way to achieve
+# TODO Consider the password with SHA256(or other) encryption
 def login(user):
     """
-    用户登录
-    :param user: 
-    :return: true表示登录成功,false表示登录失败
+    :param user: (dict)["user_id","password"]
+    :return: true/false
     """
     user_db = open(USER_DATABASE_FILE, 'r')
     user_list = json.loads(user_db.read())
     user_db.close()
-    # 检验id是否存在，并校验密码
+    # Inspection id exists and verify the password
     for pre_user in user_list:
         if user['user_id'] == pre_user['user_id']:
             if user['password'] == pre_user['password']:
@@ -51,7 +50,7 @@ def login(user):
 
 def set_user_information(user_info):
     """
-    设置用户信息
+    Set up user information
     :param user_info: 
     """
     info_db = open(USER_INFORMATION_DATABASE_FILE, 'r')
@@ -74,7 +73,7 @@ def set_user_information(user_info):
 
 def get_user_information(user):
     """
-    获取用户信息
+    Get user information
     :param user: 
     :return: 
     """
@@ -104,14 +103,12 @@ def modify_user_information(user_info):
     info_db.close()
 
 
-
-
 def check_id_in_list(id, list_to_check):
     """
-    检测该id是否在数据库中出现
-    :param id: 
+    Detects whether the id appears in the database
+    :param id:
     :param list_to_check: 
-    :return: 
+    :return: true/false
     """
     for x in list_to_check:
         if x['user_id'] == id:
