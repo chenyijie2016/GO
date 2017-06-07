@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-s
+# -*- coding: utf-8 -*-
 '''
 Features used by AlphaGo, in approximate order of importance.
 Feature                 # Notes
