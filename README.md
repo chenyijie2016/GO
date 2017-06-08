@@ -11,3 +11,9 @@
 > 两者均使用flask环境,数据传输使用本地6000端口,如需修改url及端口可到根目录下AI.py以及MuGo目录下server.py中修改(均有注释提示)
 
 > 现在网页端环境中不再需要tensorflow
+
+#### BUG暂时汇总
+
+* BUG紧急修复须知:根目录及MuGo目录下game_database文件夹中需增加sgf文件夹,否则会报错
+
+

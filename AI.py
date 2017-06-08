@@ -28,7 +28,8 @@ def play_ai_game(msg):
     response = requests.post('http://localhost:6000', data=msg)
     # send data to localhost:6000, need to be changed?
     # print(response.content.decode('utf-8'))
-
+    print(response.content)
+    print()
     result = json.loads(response.content.decode('utf-8'))
 
     # result = simpleAI.AI(msg)

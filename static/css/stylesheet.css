@@ -1,125 +1,152 @@
 
-		#mydiv {
-			text-align: center;
-		}
-
-		#buttonbar {
-			position: absolute;
-			float:left;
-			top: 550px;
-			left: 75px;
-			width: 100px;
-		}
-
-		#step {
-			width: 40px;
-		}
-.body1{	font-family: Consolas, "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", Monaco, "Courier New", "monospace";
+#mydiv {
+    text-align: center;
 }
-.backg{
-	background-position: center;
-	background-position: center;
-	background-repeat: no-repeat;
-	background-size: cover;
-	color: white;
+
+#buttonbar {
+    position: absolute;
+    float: left;
+    top: 550px;
+    left: 75px;
+    width: 100px;
 }
-		.title {
-			font-size: 30px;
-			
-		}
 
-		.rule {
-			position:relative;
-			top: 70px;
-			left: 50px;
-			width: 200px;
-			font-size: 15px;
-			
-		}
-
-		.rule1 {
-			text-align: left;
-		}
-
-		.message {
-			position: absolute;
-			top:300px;
-			right: 50px;
-			width: 200px;
-			height: 400px;
-			font-size: 20px;
-			border-width: thin;
-			border-style: solid;
-		}
-
-.rec1{
-	position: absolute;
-	left:50%;
-	margin-left: -40px;
-	top: 8px;
-	width: 150px;
-	z-index: -1；
+#step {
+    width: 40px;
 }
-#user_id{
-	background-repeat: no-repeat;
-	background-size: 100%;
-	background-position: center;
-	background-color: transparent;
-	border-color: transparent;
-	color: white;
-	font-size: 14px;
-	line-height:30px;
-}
-#game_id{	
 
-	background-repeat: no-repeat;
-	background-size: 100%;
-	background-position: center;
-	background-color: transparent;
-	border-color: transparent;
-	color: white;
-	font-size: 14px;
-	line-height:30px;
+.body1 {
+    font-family: Consolas, "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", Monaco, "Courier New", "monospace";
 }
-.rec2{
-	position: absolute;
-	left:50%;
-	margin-left: -40px;
-	top: 46px;
-	width: 150px;
-		z-index: -1；
-}
-.gameid:{
-	position: fixed;
-	left:50%;
-	margin-left: -150px
-	
-}
-		.info {
-			font-size: 25px;
-		}
 
-		.systemmessage {
+#login_reg {
+    background-color: transparent;
+}
 
-			font-size: 20px;
-			position: absolute;
-			top: 100px;
-			right:50px;
-			border-width: thin;
-			border-color: red;
-			border-style: double;
-			height: 150px;
-			width: 200px;
-		}
-.game_info{
+.backg {
+    background-position: center;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+}
+
+.title {
+    font-size: 30px;
+
+}
+
+.rule {
+    position: relative;
+    top: 70px;
+    left: 50px;
+    width: 200px;
+    font-size: 15px;
+
+}
+
+.rule1 {
+    text-align: left;
+}
+
+.message {
+    position: absolute;
+    top: 300px;
+    right: 50px;
+    width: 200px;
+    height: 200px;
+    font-size: 20px;
+    border-width: thin;
+    border-style: solid;
+}
+
+.rec1 {
+    position: absolute;
+    left: 50%;
+    margin-left: -40px;
+    top: 8px;
+    width: 150px;
+    z-index: -1 ；
+}
+
+#user_id {
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: center;
+    background-color: transparent;
+    border-color: transparent;
+    color: white;
+    font-size: 14px;
+    line-height: 30px;
+}
+
+#game_id {
+
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: center;
+    background-color: transparent;
+    border-color: transparent;
+    color: white;
+    font-size: 14px;
+    line-height: 30px;
+}
+
+.rec2 {
+    position: absolute;
+    left: 50%;
+    margin-left: -40px;
+    top: 46px;
+    width: 150px;
+    z-index: -1 ；
+}
+
+.gameid {
     position: fixed;
-	top: 80px;
-	left: 50px;
-	width: 300px;
-	font-size: 15px;
+    left: 50%;
+    margin-left: -150px
+
+}
+
+.info {
+    font-size: 25px;
+}
+
+.systemmessage {
+
+    font-size: 20px;
+    position: absolute;
+    top: 100px;
+    right: 50px;
+    border-width: thin;
+    border-color: white;
+    border-style: double;
+    height: 150px;
+    width: 200px;
+}
+
+.game_info {
+    height: 150px;
+    position: fixed;
+    top: 80px;
+    left: 50px;
+    width: 300px;
+    font-size: 15px;
     font-family: "微软雅黑 Light";
 }
-a:link {color:#000000;}     
-a:visited {color:#000000;}  
-a:hover {color:#000000;}  
-a:active {color:#000000;} 
+
+a:link {
+    color: #000000;
+}
+
+a:visited {
+    color: #000000;
+}
+
+a:hover {
+    color: #000000;
+}
+
+a:active {
+    color: #000000;
+}
