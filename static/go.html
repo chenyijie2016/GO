@@ -183,7 +183,7 @@
 		<div class="control">
 			<button class="btn" onclick="send_pass()">PASS</button>
 			<button class="btn" onclick="send_undo()">悔棋</button>
-			<button class="btn" onclick="send_tie()">求和</button>
+			<button class="btn" onclick="count()">点目</button>
 			<button class="btn" onclick="quit()">认输</button>
 
 		</div>
@@ -208,6 +208,7 @@
 	var undo_in_game = false;
 	var AI_mode = false;
 	var emeny_name = '';
+
 	var boardElement = document.querySelector(".tenuki-board");
 	var game = new tenuki.Game(boardElement);
 	game.setup();

@@ -88,7 +88,7 @@ function quit()
 
 function send_pass()
 {
-    if(game_ready && side_me == side_now)
+    if(game_ready && side_me == side_now && mypass==0)
     {
         setsystemmessage('PASS');
         if (side_me == 'black')
@@ -113,14 +113,14 @@ function send_pass()
                 play_chess_human('W[tt]');
             }
         }
-
+        mypass=1;
         game.pass()
     }
 }
 
 function send_undo()
 {
-    if(game_ready)
+    if(game_ready && !AI_mode)
     {
         setsystemmessage('请求悔棋,等待中...');
         if (AI_mode)
@@ -167,3 +167,29 @@ function undo_reply(reply)
         play_chess_human('undo_reject');
     }
 }
+
+function count()
+	{
+	    var str = "";
+	    //建议实现方式，人机模式下，人类pass，游戏强制结束，直接显示得分，
+	    if(AI_mode)
+	    {
+	        game.pass();
+	        game.pass();
+	        game.pass();
+	    }
+	    if (game.isOver())
+	    {
+	        str += "游戏结束";
+	        str += "\n\n"
+	        str += "黑棋得分 " + game.score().black;
+	        str += "\n\n";
+	        str += "白棋得分 " + game.score().white;
+
+	    }
+	    else
+	        str+="游戏尚未结束，无法计分，双方均pass后游戏结束";
+        setsystemmessage(str);
+	}
+
+
