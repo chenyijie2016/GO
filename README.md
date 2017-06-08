@@ -16,3 +16,4 @@
 
 * BUG紧急修复须知:根目录及MuGo目录下game_database文件夹中需增加sgf文件夹,否则会报错
 
+
