@@ -168,28 +168,5 @@ function undo_reply(reply)
     }
 }
 
-function count()
-	{
-	    var str = "";
-	    //建议实现方式，人机模式下，人类pass，游戏强制结束，直接显示得分，
-	    if(AI_mode)
-	    {
-	        game.pass();
-	        game.pass();
-	        game.pass();
-	    }
-	    if (game.isOver())
-	    {
-	        str += "游戏结束";
-	        str += "\n\n"
-	        str += "黑棋得分 " + game.score().black;
-	        str += "\n\n";
-	        str += "白棋得分 " + game.score().white;
-
-	    }
-	    else
-	        str+="游戏尚未结束，无法计分，双方均pass后游戏结束";
-        setsystemmessage(str);
-	}
 
 
