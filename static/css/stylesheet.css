@@ -16,6 +16,9 @@
 		}
 .body1{	font-family: Consolas, "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", Monaco, "Courier New", "monospace";
 }
+#login_reg{
+	background-color: transparent;
+}
 .backg{
 	background-position: center;
 	background-position: center;
@@ -46,7 +49,7 @@
 			top:300px;
 			right: 50px;
 			width: 200px;
-			height: 400px;
+			height: 200px;
 			font-size: 20px;
 			border-width: thin;
 			border-style: solid;
@@ -95,6 +98,12 @@
 	margin-left: -150px
 	
 }
+.btn{
+	background-color: transparent;
+	color: white;
+	border-color: white;
+	border-width: 5px;
+}
 		.info {
 			font-size: 25px;
 		}
@@ -106,12 +115,15 @@
 			top: 100px;
 			right:50px;
 			border-width: thin;
-			border-color: red;
+			border-color: white;
 			border-style: double;
 			height: 150px;
 			width: 200px;
 		}
+
+		}
 .game_info{
+	height:150px;
     position: fixed;
 	top: 80px;
 	left: 50px;

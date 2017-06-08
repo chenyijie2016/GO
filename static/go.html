@@ -74,9 +74,9 @@
 
 
 	<script type="text/javascript" src="{{url_for('static',filename='js/tenuki.js')}}"></script>
-	<link href="{{url_for("static", filename="css/tenuki.css")}}" rel="stylesheet" type="text/css">
+	<!--<link href="{{url_for("static", filename="css/tenuki.css")}}" rel="stylesheet" type="text/css">-->
 
-	<!--<script href="{{ url_for('static',filename='js/user.js') }}" type="text/javascript"></script>-->
+	<script href="{{ url_for('static',filename='js/user.js') }}" type="text/javascript"></script>
 </head>
 <body class="Body1">
 
@@ -126,11 +126,26 @@
 				<!--<input type="submit" value="创建或加入游戏" class="bt1" style="background-color:transparent;background-image:url("Group.png");"  width="45" height="45" alt="" >-->
 			</form>
 		</div>
-		<!--显示对局信息 -->
-		<div id="gameinfo" class="info"></div>
+			<!--显示对局信息 -->
+			<!--<div id="gameinfo" class="info"></div>-->
 
-		<!-- TODO 显示对局消息 要用更好的方法实现-->
-		<div id="message" class="message">
+			<!-- TODO 显示对局消息 要用更好的方法实现-->
+			<div id="game_info_well" class="game_info_well" style="font-size: 20px;
+			position: absolute;
+			top: 500px;
+			right:50px;
+			border-width: thin;
+			border-color: white;
+			border-style: double;
+			height: 150px;
+			width: 200px">
+			<button class="btn" onclick="get_game_info()">获取最新对局信息</button>
+			<br>
+			正在等待加入的对局
+			<div id="game_info_content">
+			</div>
+			</div>
+		<div id="message" class="message" style="height: 200px;">
 			收到的消息
 			<div id="gamemessage">
 
@@ -153,6 +168,8 @@
 
 			</div>
 		</div>
+	
+		
 
 
 		<iframe id="rfFrame" name="rfFrame" src="about:blank" style="display:none;"></iframe>
@@ -169,17 +186,11 @@
 		</div>
 		<a style="margin: auto;color: #DEDEDE;" href="https://github.com/chenyijie2016/GO" target="_blank">项目地址</a>
 
-
+		
 
 	</div>
 
-	<div id="game_info" class="game_info well">
-		<button class="btn" onclick="get_game_info()">获取最新对局信息</button>
-		<br>
-		正在等待加入的对局
-		<div id="game_info_content">
-		</div>
-	</div>
+	
 </div>
 
 
