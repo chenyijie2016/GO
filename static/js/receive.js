@@ -124,7 +124,7 @@ socket.on('play_game_client', function (msg)
                 console.log('收到落子消息')
                 console.log(msg)
             }
-
+            mypass=0;
             if (place.charAt(0) == 'B')
             {
                 side_now = "white";
